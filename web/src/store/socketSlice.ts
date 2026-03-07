@@ -12,7 +12,10 @@ const socketSlice = createSlice({
     setConnected: (state, action: { payload: boolean }) => {
       state.connected = action.payload;
     },
-    setLastOrderUpdate: (state, action: { payload: { orderId: string; status: string } }) => {
+    setLastOrderUpdate: (
+      state,
+      action: { payload: { orderId: string; status: string } }
+    ) => {
       state.lastOrderUpdate = action.payload;
     },
   },

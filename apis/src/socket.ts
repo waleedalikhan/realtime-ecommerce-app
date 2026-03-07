@@ -37,7 +37,10 @@ export function attachSocket(httpServer: HttpServer): Server {
     const userId = socket.data.userId as string;
     const room = `user:${userId}`;
     socket.join(room);
-    logger.info({ userId, socketId: socket.id }, "Socket connected, joined room");
+    logger.info(
+      { userId, socketId: socket.id },
+      "Socket connected, joined room"
+    );
 
     socket.on("disconnect", () => {
       logger.debug({ userId, socketId: socket.id }, "Socket disconnected");

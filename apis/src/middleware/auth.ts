@@ -7,7 +7,11 @@ const ACCESS_SECRET: string = process.env.JWT_ACCESS_SECRET ?? "";
 if (!ACCESS_SECRET) throw new Error("JWT_ACCESS_SECRET is required");
 
 /** Attach req.user from Bearer token. Use on all protected routes. */
-export function authMiddleware(req: Request, _res: Response, next: NextFunction): void {
+export function authMiddleware(
+  req: Request,
+  _res: Response,
+  next: NextFunction
+): void {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
     next(new AppError(401, "Missing or invalid Authorization header"));
@@ -25,7 +29,11 @@ export function authMiddleware(req: Request, _res: Response, next: NextFunction)
 }
 
 /** Require req.user.role === "admin". Use after authMiddleware on admin routes. */
-export function requireAdmin(req: Request, _res: Response, next: NextFunction): void {
+export function requireAdmin(
+  req: Request,
+  _res: Response,
+  next: NextFunction
+): void {
   const user = (req as Request & { user?: TokenPayload }).user;
   if (!user || user.role !== "admin") {
     next(new AppError(403, "Admin access required"));

@@ -20,7 +20,8 @@ export function useOrderUpdates(
       return;
     }
     const s = getSocket(token);
-    const handler = (payload: OrderUpdatePayload) => onUpdateRef.current(payload);
+    const handler = (payload: OrderUpdatePayload) =>
+      onUpdateRef.current(payload);
     s.on("order.status_updated", handler);
     return () => {
       s.off("order.status_updated", handler);

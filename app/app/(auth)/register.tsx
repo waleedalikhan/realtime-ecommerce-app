@@ -20,10 +20,11 @@ export default function RegisterScreen() {
   async function onSubmit(data: RegisterBody) {
     setError(null);
     try {
-      const result = (await api<{ accessToken: string; refreshToken: string; user: { id: string; email: string; name: string | null; role: string } }>(
-        "/auth/register",
-        { method: "POST", body: JSON.stringify(data) }
-      ));
+      const result = await api<{
+        accessToken: string;
+        refreshToken: string;
+        user: { id: string; email: string; name: string | null; role: string };
+      }>("/auth/register", { method: "POST", body: JSON.stringify(data) });
       await login(result.accessToken, result.refreshToken, result.user);
       router.replace("/(tabs)");
     } catch (e) {
@@ -36,10 +37,19 @@ export default function RegisterScreen() {
       <Controller
         control={control}
         name="email"
-        render={({ field: { onChange, value }, fieldState: { error: err } }) => (
+        render={({
+          field: { onChange, value },
+          fieldState: { error: err },
+        }) => (
           <>
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} value={value} onChangeText={onChange} keyboardType="email-address" autoCapitalize="none" />
+            <TextInput
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
             {err && <Text style={styles.err}>{err.message}</Text>}
           </>
         )}
@@ -47,10 +57,18 @@ export default function RegisterScreen() {
       <Controller
         control={control}
         name="password"
-        render={({ field: { onChange, value }, fieldState: { error: err } }) => (
+        render={({
+          field: { onChange, value },
+          fieldState: { error: err },
+        }) => (
           <>
             <Text style={styles.label}>Password</Text>
-            <TextInput style={styles.input} value={value} onChangeText={onChange} secureTextEntry />
+            <TextInput
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+              secureTextEntry
+            />
             {err && <Text style={styles.err}>{err.message}</Text>}
           </>
         )}
@@ -61,7 +79,11 @@ export default function RegisterScreen() {
         render={({ field: { onChange, value } }) => (
           <>
             <Text style={styles.label}>Name (optional)</Text>
-            <TextInput style={styles.input} value={value ?? ""} onChangeText={onChange} />
+            <TextInput
+              style={styles.input}
+              value={value ?? ""}
+              onChangeText={onChange}
+            />
           </>
         )}
       />
@@ -70,7 +92,9 @@ export default function RegisterScreen() {
         <Text style={styles.buttonText}>Register</Text>
       </Pressable>
       <Link href="/(auth)/login" asChild>
-        <Pressable><Text style={styles.link}>Login</Text></Pressable>
+        <Pressable>
+          <Text style={styles.link}>Login</Text>
+        </Pressable>
       </Link>
     </View>
   );
@@ -81,7 +105,12 @@ const styles = StyleSheet.create({
   label: { marginTop: 12, marginBottom: 4 },
   input: { borderWidth: 1, padding: 10, borderRadius: 6 },
   err: { color: "red", marginTop: 4 },
-  button: { marginTop: 20, backgroundColor: "#2563eb", padding: 12, borderRadius: 6 },
+  button: {
+    marginTop: 20,
+    backgroundColor: "#2563eb",
+    padding: 12,
+    borderRadius: 6,
+  },
   buttonText: { color: "#fff", textAlign: "center" },
   link: { color: "#2563eb", marginTop: 12 },
 });

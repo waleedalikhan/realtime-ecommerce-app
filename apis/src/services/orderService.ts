@@ -25,7 +25,8 @@ export async function getOrderById(orderId: string, user: TokenPayload) {
     include: { items: { include: { product: true } } },
   });
   if (!order) throw new AppError(404, "Order not found");
-  if (order.userId !== user.sub && user.role !== "admin") throw new AppError(403, "Forbidden");
+  if (order.userId !== user.sub && user.role !== "admin")
+    throw new AppError(403, "Forbidden");
   return order;
 }
 

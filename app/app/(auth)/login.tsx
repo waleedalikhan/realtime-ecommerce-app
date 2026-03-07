@@ -41,7 +41,10 @@ export default function LoginScreen() {
       <Controller
         control={control}
         name="email"
-        render={({ field: { onChange, value }, fieldState: { error: err } }) => (
+        render={({
+          field: { onChange, value },
+          fieldState: { error: err },
+        }) => (
           <View>
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -58,10 +61,18 @@ export default function LoginScreen() {
       <Controller
         control={control}
         name="password"
-        render={({ field: { onChange, value }, fieldState: { error: err } }) => (
+        render={({
+          field: { onChange, value },
+          fieldState: { error: err },
+        }) => (
           <View>
             <Text style={styles.label}>Password</Text>
-            <TextInput style={styles.input} value={value} onChangeText={onChange} secureTextEntry />
+            <TextInput
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+              secureTextEntry
+            />
             {err ? <Text style={styles.err}>{err.message}</Text> : null}
           </View>
         )}
@@ -71,7 +82,9 @@ export default function LoginScreen() {
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
       <Link href="/(auth)/register" asChild>
-        <Pressable><Text style={styles.link}>Register</Text></Pressable>
+        <Pressable>
+          <Text style={styles.link}>Register</Text>
+        </Pressable>
       </Link>
     </View>
   );
@@ -82,7 +95,12 @@ const styles = StyleSheet.create({
   label: { marginTop: 12, marginBottom: 4 },
   input: { borderWidth: 1, padding: 10, borderRadius: 6 },
   err: { color: "red", marginTop: 4 },
-  button: { marginTop: 20, backgroundColor: "#2563eb", padding: 12, borderRadius: 6 },
+  button: {
+    marginTop: 20,
+    backgroundColor: "#2563eb",
+    padding: 12,
+    borderRadius: 6,
+  },
   buttonText: { color: "#fff", textAlign: "center" },
   link: { color: "#2563eb", marginTop: 12 },
 });

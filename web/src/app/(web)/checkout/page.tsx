@@ -15,7 +15,12 @@ export default function CheckoutPage() {
   const token = useSelector((s: RootState) => s.auth.token);
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { register: reg, handleSubmit, formState: { errors }, setError } = useForm<CheckoutBody>({
+  const {
+    register: reg,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<CheckoutBody>({
     resolver: zodResolver(checkoutBodySchema),
   });
 
@@ -55,10 +60,15 @@ export default function CheckoutPage() {
     <div className="mx-auto max-w-md px-6">
       <div className="rounded-2xl border border-stone-800/80 bg-stone-900/40 p-8">
         <h1 className="text-2xl font-bold text-white">Checkout</h1>
-        <p className="mt-2 text-stone-400">Enter shipping and contact details.</p>
+        <p className="mt-2 text-stone-400">
+          Enter shipping and contact details.
+        </p>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <div>
-            <label htmlFor="shippingAddress" className="block text-sm font-medium text-stone-300">
+            <label
+              htmlFor="shippingAddress"
+              className="block text-sm font-medium text-stone-300"
+            >
               Shipping address
             </label>
             <input
@@ -68,11 +78,16 @@ export default function CheckoutPage() {
               placeholder="Street, city, postal code"
             />
             {errors.shippingAddress && (
-              <p className="mt-1 text-sm text-red-400">{errors.shippingAddress.message}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.shippingAddress.message}
+              </p>
             )}
           </div>
           <div>
-            <label htmlFor="contactEmail" className="block text-sm font-medium text-stone-300">
+            <label
+              htmlFor="contactEmail"
+              className="block text-sm font-medium text-stone-300"
+            >
               Contact email
             </label>
             <input
@@ -83,11 +98,16 @@ export default function CheckoutPage() {
               placeholder="you@example.com"
             />
             {errors.contactEmail && (
-              <p className="mt-1 text-sm text-red-400">{errors.contactEmail.message}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.contactEmail.message}
+              </p>
             )}
           </div>
           <div>
-            <label htmlFor="contactPhone" className="block text-sm font-medium text-stone-300">
+            <label
+              htmlFor="contactPhone"
+              className="block text-sm font-medium text-stone-300"
+            >
               Contact phone (optional)
             </label>
             <input
@@ -97,7 +117,9 @@ export default function CheckoutPage() {
               placeholder="+1 234 567 8900"
             />
           </div>
-          {errors.root && <p className="text-sm text-red-400">{errors.root.message}</p>}
+          {errors.root && (
+            <p className="text-sm text-red-400">{errors.root.message}</p>
+          )}
           <button
             type="submit"
             className="w-full rounded-xl bg-amber-500 py-2.5 font-semibold text-[#0c0c0f] transition hover:bg-amber-400"

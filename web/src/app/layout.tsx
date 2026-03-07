@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { Providers } from "./providers";
-import { SiteLayout } from "@/components/SiteLayout";
+import { Providers } from "@/app/providers";
+import Header from "@/components/global/Header";
+import Footer from "@/components/global/Footer";
+
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Realtime Commerce",
@@ -17,7 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <SiteLayout>{children}</SiteLayout>
+          <main className="min-h-screen bg-[#0c0c0f] text-stone-100 antialiased flex flex-col">
+            <Header />
+            <section className="flex-1 pt-24 pb-12">{children}</section>
+            <Footer />
+          </main>
         </Providers>
       </body>
     </html>

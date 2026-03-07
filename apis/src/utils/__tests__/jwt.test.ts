@@ -29,7 +29,11 @@ describe("jwt", () => {
   });
 
   it("verifyToken throws for wrong secret", () => {
-    const token = signAccessToken({ sub: "u", email: "e@e.com", role: "user" }, SECRET, "15m");
+    const token = signAccessToken(
+      { sub: "u", email: "e@e.com", role: "user" },
+      SECRET,
+      "15m"
+    );
     expect(() => verifyToken(token, "wrong-secret")).toThrow();
   });
 });

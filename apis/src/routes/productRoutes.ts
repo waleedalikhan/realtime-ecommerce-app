@@ -1,5 +1,8 @@
 import { Router, type IRouter } from "express";
-import { listHandler, getByIdHandler } from "../controllers/productController.js";
+import {
+  listHandler,
+  getByIdHandler,
+} from "../controllers/productController.js";
 import { validate } from "../middleware/validate.js";
 import { productsQuerySchema, productIdParamSchema } from "@repo/shared";
 

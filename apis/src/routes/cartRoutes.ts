@@ -1,8 +1,17 @@
 import { Router, type IRouter } from "express";
-import { getHandler, addItemHandler, updateItemHandler, removeItemHandler } from "../controllers/cartController.js";
+import {
+  getHandler,
+  addItemHandler,
+  updateItemHandler,
+  removeItemHandler,
+} from "../controllers/cartController.js";
 import { authMiddleware } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
-import { addCartItemBodySchema, updateCartItemBodySchema, cartItemIdParamSchema } from "@repo/shared";
+import {
+  addCartItemBodySchema,
+  updateCartItemBodySchema,
+  cartItemIdParamSchema,
+} from "@repo/shared";
 
 const router: IRouter = Router();
 
@@ -16,9 +25,18 @@ router.get("/", getHandler);
 router.post("/items", validate(addCartItemBodySchema), addItemHandler);
 
 // PATCH /cart/items/:itemId
-router.patch("/items/:itemId", validate(cartItemIdParamSchema, "params"), validate(updateCartItemBodySchema), updateItemHandler);
+router.patch(
+  "/items/:itemId",
+  validate(cartItemIdParamSchema, "params"),
+  validate(updateCartItemBodySchema),
+  updateItemHandler
+);
 
 // DELETE /cart/items/:itemId
-router.delete("/items/:itemId", validate(cartItemIdParamSchema, "params"), removeItemHandler);
+router.delete(
+  "/items/:itemId",
+  validate(cartItemIdParamSchema, "params"),
+  removeItemHandler
+);
 
 export default router;

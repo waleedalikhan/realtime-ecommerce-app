@@ -2,20 +2,47 @@ import { prisma } from "../lib/prisma.js";
 import type { ProductsQuery } from "@repo/shared";
 
 /**
- * List products with pagination, optional category filter, and sort by price.
+ * List products with pagination, optional category filter, search, and sort by price.
  */
 export async function listProducts(query: ProductsQuery) {
-  const { page, limit, category, sort } = query;
+  const { page, limit, category, sort, search } = query;
   const skip = (page - 1) * limit;
-  const where = category ? { category } : {};
-  const orderBy = sort === "price_desc" ? { price: "desc" as const } : { price: "asc" as const };
 
-  const [data, total] = await Promise.all([
+  const term = search?.trim();
+  const where = {
+    ...(category ? { category } : {}),
+    ...(term
+      ? {
+          OR: [
+            { name: { contains: term, mode: "insensitive" as const } },
+            { description: { contains: term, mode: "insensitive" as const } },
+          ],
+        }
+      : {}),
+  };
+
+  const orderBy =
+    sort === "price_desc"
+      ? { price: "desc" as const }
+      : { price: "asc" as const };
+
+  const [data, total, categories] = await Promise.all([
     prisma.product.findMany({ where, skip, take: limit, orderBy }),
     prisma.product.count({ where }),
+    prisma.product.findMany({
+      select: { category: true },
+      distinct: ["category"],
+      orderBy: { category: "asc" },
+    }),
   ]);
 
-  return { data, total, page, limit };
+  return {
+    data,
+    total,
+    page,
+    limit,
+    categories: categories.map((c) => c.category),
+  };
 }
 
 /**

@@ -18,7 +18,10 @@ export async function getRefreshToken(): Promise<string | null> {
   return SecureStore.getItemAsync(REFRESH_KEY);
 }
 
-export async function setTokens(access: string, refresh: string | null): Promise<void> {
+export async function setTokens(
+  access: string,
+  refresh: string | null
+): Promise<void> {
   await SecureStore.setItemAsync(ACCESS_KEY, access);
   if (refresh) await SecureStore.setItemAsync(REFRESH_KEY, refresh);
 }
@@ -53,7 +56,10 @@ export async function api<T>(
         body: JSON.stringify({ refreshToken: refresh }),
       });
       if (refreshRes.ok) {
-        const data = (await refreshRes.json()) as { accessToken?: string; refreshToken?: string };
+        const data = (await refreshRes.json()) as {
+          accessToken?: string;
+          refreshToken?: string;
+        };
         if (data.accessToken) {
           await setTokens(data.accessToken, data.refreshToken ?? null);
           token = data.accessToken;

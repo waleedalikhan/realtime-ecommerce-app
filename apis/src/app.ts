@@ -15,7 +15,9 @@ import adminRoutes from "./routes/adminRoutes.js";
 import apiDocsRoutes from "./routes/apiDocs.js";
 
 const app: Application = express();
-const corsOrigins = process.env.CORS_ORIGINS?.split(",").map((o) => o.trim()) ?? ["http://localhost:3000"];
+const corsOrigins = process.env.CORS_ORIGINS?.split(",").map((o) =>
+  o.trim()
+) ?? ["http://localhost:3000"];
 
 app.use(cors({ origin: corsOrigins, credentials: true }));
 app.use(express.json());

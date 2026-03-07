@@ -1,8 +1,17 @@
 import { Router, type IRouter } from "express";
-import { registerHandler, loginHandler, refreshHandler, meHandler } from "../controllers/authController.js";
+import {
+  registerHandler,
+  loginHandler,
+  refreshHandler,
+  meHandler,
+} from "../controllers/authController.js";
 import { validate } from "../middleware/validate.js";
 import { authMiddleware } from "../middleware/auth.js";
-import { registerBodySchema, loginBodySchema, refreshBodySchema } from "@repo/shared";
+import {
+  registerBodySchema,
+  loginBodySchema,
+  refreshBodySchema,
+} from "@repo/shared";
 
 const router: IRouter = Router();
 

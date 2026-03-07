@@ -3,7 +3,9 @@ import { AppError } from "../utils/errors.js";
 import type { CheckoutBody } from "@repo/shared";
 import type { Server as SocketServer } from "socket.io";
 
-type TransactionClient = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
+type TransactionClient = Parameters<
+  Parameters<typeof prisma.$transaction>[0]
+>[0];
 
 /**
  * Checkout: create order from cart, decrement stock (optimistic locking), clear cart.
@@ -19,16 +21,24 @@ export async function checkout(
     where: { userId },
     include: { items: { include: { product: true } } },
   });
-  if (!cart || cart.items.length === 0) throw new AppError(400, "Cart is empty");
+  if (!cart || cart.items.length === 0)
+    throw new AppError(400, "Cart is empty");
 
   const order = await prisma.$transaction(async (tx: TransactionClient) => {
     for (const item of cart.items) {
       const p = item.product;
       const res = await tx.product.updateMany({
         where: { id: p.id, version: p.version },
-        data: { stock: { decrement: item.quantity }, version: { increment: 1 } },
+        data: {
+          stock: { decrement: item.quantity },
+          version: { increment: 1 },
+        },
       });
-      if (res.count === 0) throw new AppError(409, "Insufficient stock or concurrent update; please retry");
+      if (res.count === 0)
+        throw new AppError(
+          409,
+          "Insufficient stock or concurrent update; please retry"
+        );
     }
 
     const order = await tx.order.create({

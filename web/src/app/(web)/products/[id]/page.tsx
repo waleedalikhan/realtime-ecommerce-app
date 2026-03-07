@@ -25,7 +25,11 @@ export default function ProductDetailPage() {
   const token = useSelector((s: RootState) => s.auth.token);
   const id = params.id as string;
 
-  const { data: product, isLoading, error } = useQuery({
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: queryKeys.product(id),
     queryFn: () => api<Product>(`/products/${id}`),
   });
@@ -57,8 +61,13 @@ export default function ProductDetailPage() {
   if (error || !product) {
     return (
       <div className="mx-auto max-w-2xl px-6">
-        <p className="text-red-400">{(error as Error)?.message ?? "Product not found."}</p>
-        <Link href="/products" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
+        <p className="text-red-400">
+          {(error as Error)?.message ?? "Product not found."}
+        </p>
+        <Link
+          href="/products"
+          className="mt-4 inline-block text-amber-400 hover:text-amber-300"
+        >
           Back to products
         </Link>
       </div>
@@ -75,9 +84,12 @@ export default function ProductDetailPage() {
       </Link>
       <div className="mt-6 rounded-2xl border border-stone-800/80 bg-stone-900/40 p-8">
         <h1 className="text-2xl font-bold text-white">{product.name}</h1>
-        <p className="mt-2 text-stone-400">{product.description ?? "No description."}</p>
+        <p className="mt-2 text-stone-400">
+          {product.description ?? "No description."}
+        </p>
         <p className="mt-4 text-lg font-medium text-white">
-          ${product.price} <span className="text-stone-500">· {product.category}</span>
+          ${product.price}{" "}
+          <span className="text-stone-500">· {product.category}</span>
         </p>
         {product.stock !== undefined && (
           <p className="mt-1 text-sm text-stone-500">

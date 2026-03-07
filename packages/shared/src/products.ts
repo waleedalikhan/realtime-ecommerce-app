@@ -1,11 +1,12 @@
 import { z } from "zod";
 
-/** Used by GET /products query params: pagination, filter, sort */
+/** Used by GET /products query params: pagination, filter, sort, search */
 export const productsQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
   category: z.string().optional(),
   sort: z.enum(["price_asc", "price_desc"]).optional(),
+  search: z.string().min(1).optional(),
 });
 
 /** Used by GET /products/:id - path param */

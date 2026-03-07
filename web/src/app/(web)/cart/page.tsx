@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import Link from "next/link";
 
-type CartItem = { id: string; quantity: number; product: { id: string; name: string; price: number } };
+type CartItem = {
+  id: string;
+  quantity: number;
+  product: { id: string; name: string; price: number };
+};
 type Cart = { id: string; items: CartItem[] };
 
 export default function CartPage() {
@@ -19,8 +23,13 @@ export default function CartPage() {
     enabled: !!token,
   });
   const removeMutation = useMutation({
-    mutationFn: (itemId: string) => api(`/cart/items/${itemId}`, { method: "DELETE", token: token ?? undefined }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.cart() }),
+    mutationFn: (itemId: string) =>
+      api(`/cart/items/${itemId}`, {
+        method: "DELETE",
+        token: token ?? undefined,
+      }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart() }),
   });
 
   if (!token) {
@@ -69,9 +78,13 @@ export default function CartPage() {
                 className="flex items-center justify-between rounded-xl border border-stone-800/80 bg-stone-900/40 p-4"
               >
                 <div>
-                  <span className="font-medium text-white">{item.product.name}</span>
+                  <span className="font-medium text-white">
+                    {item.product.name}
+                  </span>
                   <span className="ml-2 text-stone-400">× {item.quantity}</span>
-                  <p className="text-sm text-stone-500">${item.product.price} each</p>
+                  <p className="text-sm text-stone-500">
+                    ${item.product.price} each
+                  </p>
                 </div>
                 <button
                   onClick={() => removeMutation.mutate(item.id)}

@@ -49,7 +49,9 @@ export default function OrdersPage() {
   return (
     <div className="mx-auto max-w-2xl px-6">
       <h1 className="text-2xl font-bold text-white">Orders</h1>
-      <p className="mt-1 text-stone-400">Track your orders with live status updates.</p>
+      <p className="mt-1 text-stone-400">
+        Track your orders with live status updates.
+      </p>
       {!orders?.length ? (
         <div className="mt-8 rounded-2xl border border-stone-800/80 bg-stone-900/40 p-8 text-center">
           <p className="text-stone-400">No orders yet.</p>
@@ -69,7 +71,9 @@ export default function OrdersPage() {
                 className="block rounded-xl border border-stone-800/80 bg-stone-900/40 p-4 transition hover:border-stone-700 hover:bg-stone-900/60"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-stone-300">{o.id.slice(0, 8)}…</span>
+                  <span className="font-mono text-sm text-stone-300">
+                    {o.id.slice(0, 8)}…
+                  </span>
                   <span className="rounded-full bg-stone-700/80 px-3 py-0.5 text-sm font-medium text-stone-300">
                     {o.status}
                   </span>

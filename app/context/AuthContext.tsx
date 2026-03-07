@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { api, getAccessToken, setTokens, clearTokens } from "@/api/client";
 
 type User = { id: string; email: string; name: string | null; role: string };
@@ -16,17 +22,24 @@ type AuthContextValue = AuthState & {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AuthState>({ token: null, user: null, ready: false });
+  const [state, setState] = useState<AuthState>({
+    token: null,
+    user: null,
+    ready: false,
+  });
 
   const logout = useCallback(async () => {
     await clearTokens();
     setState({ token: null, user: null, ready: true });
   }, []);
 
-  const login = useCallback(async (access: string, refresh: string | null, user: User) => {
-    await setTokens(access, refresh);
-    setState({ token: access, user, ready: true });
-  }, []);
+  const login = useCallback(
+    async (access: string, refresh: string | null, user: User) => {
+      await setTokens(access, refresh);
+      setState({ token: access, user, ready: true });
+    },
+    []
+  );
 
   const restore = useCallback(async () => {
     const token = await getAccessToken();

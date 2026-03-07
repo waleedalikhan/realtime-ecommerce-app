@@ -29,7 +29,11 @@ export const adminOrderStatusBodySchema = z.object({
   status: orderStatusSchema,
 });
 
-export type AdminCreateProductBody = z.infer<typeof adminCreateProductBodySchema>;
-export type AdminUpdateProductBody = z.infer<typeof adminUpdateProductBodySchema>;
+export type AdminCreateProductBody = z.infer<
+  typeof adminCreateProductBodySchema
+>;
+export type AdminUpdateProductBody = z.infer<
+  typeof adminUpdateProductBodySchema
+>;
 export type AdminIdParam = z.infer<typeof adminIdParamSchema>;
 export type AdminOrderStatusBody = z.infer<typeof adminOrderStatusBodySchema>;

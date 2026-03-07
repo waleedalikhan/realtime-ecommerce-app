@@ -30,7 +30,9 @@ export function useOrderUpdates(token: string | null) {
     const onStatus = (payload: { orderId: string; status: string }) => {
       dispatch(setLastOrderUpdate(payload));
       queryClient.invalidateQueries({ queryKey: queryKeys.orders() });
-      queryClient.invalidateQueries({ queryKey: queryKeys.order(payload.orderId) });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.order(payload.orderId),
+      });
     };
 
     s.on("connect", onConnect);

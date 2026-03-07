@@ -10,6 +10,7 @@
     "build": "pnpm --filter shared build && pnpm -r build --filter web --filter apis",
     "db:generate": "pnpm --filter apis exec prisma generate",
     "db:migrate": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma migrate deploy",
+    "db:reset": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma migrate reset --force",
     "db:seed": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma db seed",
     "db:studio": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma studio"
   },

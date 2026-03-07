@@ -10,7 +10,11 @@ function getUser(req: Request): TokenPayload {
 }
 
 /** GET /orders */
-export async function listHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function listHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const orders = await listOrders(getUser(req));
     res.json(orders);
@@ -21,7 +25,11 @@ export async function listHandler(req: Request, res: Response, next: NextFunctio
 }
 
 /** GET /orders/:id */
-export async function getByIdHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getByIdHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const { id } = req.params as { id: string };
     const order = await getOrderById(id, getUser(req));

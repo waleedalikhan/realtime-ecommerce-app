@@ -18,8 +18,14 @@ export async function checkoutHandler(
   next: NextFunction
 ): Promise<void> {
   try {
-    const body = req.body as { shippingAddress: string; contactEmail: string; contactPhone?: string };
-    const io = (req as Request & { app?: { get?: (k: string) => SocketServer } }).app?.get?.("io") as SocketServer | undefined;
+    const body = req.body as {
+      shippingAddress: string;
+      contactEmail: string;
+      contactPhone?: string;
+    };
+    const io = (
+      req as Request & { app?: { get?: (k: string) => SocketServer } }
+    ).app?.get?.("io") as SocketServer | undefined;
     const order = await checkout(getUserId(req), body, io);
     if (io) startOrderLifecycle(order.id, io);
     res.status(201).json(order);

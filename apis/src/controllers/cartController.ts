@@ -1,5 +1,10 @@
 import type { Request, Response, NextFunction } from "express";
-import { getCart, addCartItem, updateCartItem, removeCartItem } from "../services/cartService.js";
+import {
+  getCart,
+  addCartItem,
+  updateCartItem,
+  removeCartItem,
+} from "../services/cartService.js";
 import type { TokenPayload } from "../utils/jwt.js";
 import { AppError } from "../utils/errors.js";
 
@@ -10,7 +15,11 @@ function getUserId(req: Request): string {
 }
 
 /** GET /cart */
-export async function getHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const cart = await getCart(getUserId(req));
     res.json(cart);
@@ -21,7 +30,11 @@ export async function getHandler(req: Request, res: Response, next: NextFunction
 }
 
 /** POST /cart/items */
-export async function addItemHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function addItemHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const body = req.body as { productId: string; quantity: number };
     const cart = await addCartItem(getUserId(req), body);
@@ -33,7 +46,11 @@ export async function addItemHandler(req: Request, res: Response, next: NextFunc
 }
 
 /** PATCH /cart/items/:itemId */
-export async function updateItemHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function updateItemHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const { itemId } = req.params as { itemId: string };
     const body = req.body as { quantity: number };
@@ -46,7 +63,11 @@ export async function updateItemHandler(req: Request, res: Response, next: NextF
 }
 
 /** DELETE /cart/items/:itemId */
-export async function removeItemHandler(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function removeItemHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   try {
     const { itemId } = req.params as { itemId: string };
     const cart = await removeCartItem(getUserId(req), itemId);

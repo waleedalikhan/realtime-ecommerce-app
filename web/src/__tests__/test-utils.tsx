@@ -8,13 +8,17 @@ import cartUiReducer from "@/store/cartUiSlice";
 import socketReducer from "@/store/socketSlice";
 import type { RootState } from "@/store";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false } },
 });
 
 function createStore(preloadedState?: Partial<RootState>) {
   return configureStore({
-    reducer: { auth: authReducer, cartUi: cartUiReducer, socket: socketReducer },
+    reducer: {
+      auth: authReducer,
+      cartUi: cartUiReducer,
+      socket: socketReducer,
+    },
     preloadedState,
   });
 }
@@ -37,12 +41,16 @@ function AllTheProviders({
 
 export function renderWithProviders(
   ui: React.ReactElement,
-  options?: Omit<RenderOptions, "wrapper"> & { preloadedState?: Partial<RootState> }
+  options?: Omit<RenderOptions, "wrapper"> & {
+    preloadedState?: Partial<RootState>;
+  }
 ) {
   const { preloadedState, ...renderOptions } = options ?? {};
   const store = preloadedState ? createStore(preloadedState) : defaultStore;
   return render(ui, {
-    wrapper: ({ children }) => <AllTheProviders store={store}>{children}</AllTheProviders>,
+    wrapper: ({ children }) => (
+      <AllTheProviders store={store}>{children}</AllTheProviders>
+    ),
     ...renderOptions,
   });
 }

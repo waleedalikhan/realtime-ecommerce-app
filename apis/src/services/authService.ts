@@ -1,6 +1,10 @@
 import { prisma } from "../lib/prisma.js";
 import { hashPassword, verifyPassword } from "../utils/hash.js";
-import { signAccessToken, signRefreshToken, verifyToken } from "../utils/jwt.js";
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyToken,
+} from "../utils/jwt.js";
 import { AppError } from "../utils/errors.js";
 import type { RegisterBody, LoginBody } from "@repo/shared";
 
@@ -19,7 +23,9 @@ export type AuthResult = {
  * Register: hash password, create user, return tokens.
  */
 export async function register(data: RegisterBody): Promise<AuthResult> {
-  const existing = await prisma.user.findUnique({ where: { email: data.email } });
+  const existing = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
   if (existing) throw new AppError(409, "Email already registered");
 
   const hashed = await hashPassword(data.password);
@@ -37,7 +43,11 @@ export async function register(data: RegisterBody): Promise<AuthResult> {
     ACCESS_SECRET,
     ACCESS_EXP
   );
-  const refreshToken = signRefreshToken({ sub: user.id }, REFRESH_SECRET, REFRESH_EXP);
+  const refreshToken = signRefreshToken(
+    { sub: user.id },
+    REFRESH_SECRET,
+    REFRESH_EXP
+  );
   await prisma.refreshToken.create({
     data: {
       token: refreshToken,
@@ -68,7 +78,11 @@ export async function login(data: LoginBody): Promise<AuthResult> {
     ACCESS_SECRET,
     ACCESS_EXP
   );
-  const refreshToken = signRefreshToken({ sub: user.id }, REFRESH_SECRET, REFRESH_EXP);
+  const refreshToken = signRefreshToken(
+    { sub: user.id },
+    REFRESH_SECRET,
+    REFRESH_EXP
+  );
   await prisma.refreshToken.create({
     data: {
       token: refreshToken,
@@ -87,14 +101,23 @@ export async function login(data: LoginBody): Promise<AuthResult> {
 /**
  * Refresh: validate refresh token from DB, issue new access (and optionally rotate refresh).
  */
-export async function refresh(refreshToken: string): Promise<{ accessToken: string; refreshToken: string; user: AuthResult["user"] }> {
+export async function refresh(
+  refreshToken: string
+): Promise<{
+  accessToken: string;
+  refreshToken: string;
+  user: AuthResult["user"];
+}> {
   verifyToken<{ sub: string }>(refreshToken, REFRESH_SECRET);
   const stored = await prisma.refreshToken.findUnique({
     where: { token: refreshToken },
     include: { user: true },
   });
   if (!stored || stored.expiresAt < new Date()) {
-    if (stored) await prisma.refreshToken.delete({ where: { id: stored.id } }).catch(() => { });
+    if (stored)
+      await prisma.refreshToken
+        .delete({ where: { id: stored.id } })
+        .catch(() => {});
     throw new AppError(401, "Invalid or expired refresh token");
   }
 
@@ -104,7 +127,11 @@ export async function refresh(refreshToken: string): Promise<{ accessToken: stri
     ACCESS_SECRET,
     ACCESS_EXP
   );
-  const newRefresh = signRefreshToken({ sub: user.id }, REFRESH_SECRET, REFRESH_EXP);
+  const newRefresh = signRefreshToken(
+    { sub: user.id },
+    REFRESH_SECRET,
+    REFRESH_EXP
+  );
   await prisma.refreshToken.delete({ where: { id: stored.id } });
   await prisma.refreshToken.create({
     data: {

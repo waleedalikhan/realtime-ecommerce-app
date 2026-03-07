@@ -20,12 +20,26 @@ const router: IRouter = Router();
 router.use(authMiddleware, requireAdmin);
 
 // POST /admin/products
-router.post("/products", validate(adminCreateProductBodySchema), createProductHandler);
+router.post(
+  "/products",
+  validate(adminCreateProductBodySchema),
+  createProductHandler
+);
 
 // PATCH /admin/products/:id
-router.patch("/products/:id", validate(adminIdParamSchema, "params"), validate(adminUpdateProductBodySchema), updateProductHandler);
+router.patch(
+  "/products/:id",
+  validate(adminIdParamSchema, "params"),
+  validate(adminUpdateProductBodySchema),
+  updateProductHandler
+);
 
 // PATCH /admin/orders/:id/status
-router.patch("/orders/:id/status", validate(adminIdParamSchema, "params"), validate(adminOrderStatusBodySchema), updateOrderStatusHandler);
+router.patch(
+  "/orders/:id/status",
+  validate(adminIdParamSchema, "params"),
+  validate(adminOrderStatusBodySchema),
+  updateOrderStatusHandler
+);
 
 export default router;

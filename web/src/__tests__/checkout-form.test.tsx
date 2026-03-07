@@ -4,7 +4,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";
-import CheckoutPage from "@/app/checkout/page";
+import CheckoutPage from "@/app/(web)/checkout/page";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -23,12 +23,17 @@ describe("CheckoutPage", () => {
 
   beforeEach(() => {
     vi.stubGlobal("fetch", vi.fn());
-    (globalThis.fetch as ReturnType<typeof vi.fn>).mockImplementation((url: string) => {
-      if (typeof url === "string" && url.includes("/checkout")) {
-        return Promise.resolve({ ok: true, json: async () => ({ id: "ord-1" }) });
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockImplementation(
+      (url: string) => {
+        if (typeof url === "string" && url.includes("/checkout")) {
+          return Promise.resolve({
+            ok: true,
+            json: async () => ({ id: "ord-1" }),
+          });
+        }
+        return Promise.reject(new Error("unmocked"));
       }
-      return Promise.reject(new Error("unmocked"));
-    });
+    );
   });
 
   it("shows validation errors when submitting empty form", async () => {
@@ -36,8 +41,12 @@ describe("CheckoutPage", () => {
     const submit = screen.getByRole("button", { name: /place order/i });
     fireEvent.click(submit);
     await waitFor(() => {
-      expect(screen.getByText(/Shipping address is required/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Shipping address is required/i)
+      ).toBeInTheDocument();
     });
-    expect(screen.getByRole("button", { name: /place order/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /place order/i })
+    ).toBeInTheDocument();
   });
 });

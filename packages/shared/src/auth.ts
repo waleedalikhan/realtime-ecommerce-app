@@ -10,7 +10,7 @@ export const registerBodySchema = z.object({
 /** Used by POST /auth/login and web/app login form */
 export const loginBodySchema = z.object({
   email: z.string().email(),
-  password: z.string().min(1),
+  password: z.string().min(0, 'Password is required')
 });
 
 /** Optional: refresh token in body (e.g. mobile); web may use httpOnly cookie */

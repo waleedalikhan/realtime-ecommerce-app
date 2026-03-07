@@ -56,7 +56,10 @@ export default function OrderTrackingPage() {
     return (
       <div className="mx-auto max-w-2xl px-6">
         <p className="text-stone-400">Order not found.</p>
-        <Link href="/orders" className="mt-4 inline-block text-amber-400 hover:text-amber-300">
+        <Link
+          href="/orders"
+          className="mt-4 inline-block text-amber-400 hover:text-amber-300"
+        >
           Back to orders
         </Link>
       </div>
@@ -73,12 +76,16 @@ export default function OrderTrackingPage() {
       </Link>
       <div className="mt-6 rounded-2xl border border-stone-800/80 bg-stone-900/40 p-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-white">Order {order.id.slice(0, 8)}…</h1>
+          <h1 className="text-2xl font-bold text-white">
+            Order {order.id.slice(0, 8)}…
+          </h1>
           <span className="rounded-full bg-amber-500/20 px-3 py-1 text-sm font-medium text-amber-400">
             {order.status}
           </span>
         </div>
-        <p className="mt-2 text-sm text-stone-500">Live updates when status changes.</p>
+        <p className="mt-2 text-sm text-stone-500">
+          Live updates when status changes.
+        </p>
         <dl className="mt-6 space-y-2 text-sm">
           <div>
             <dt className="text-stone-500">Shipping address</dt>
@@ -94,7 +101,9 @@ export default function OrderTrackingPage() {
           {order.items.map((item, i) => (
             <li key={i}>
               {item.product.name} × {item.quantity}
-              {item.priceAt != null && <span className="text-stone-500"> · ${item.priceAt}</span>}
+              {item.priceAt != null && (
+                <span className="text-stone-500"> · ${item.priceAt}</span>
+              )}
             </li>
           ))}
         </ul>

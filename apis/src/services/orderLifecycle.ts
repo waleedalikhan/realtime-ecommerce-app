@@ -2,7 +2,13 @@ import { prisma } from "../lib/prisma.js";
 import type { Server as SocketServer } from "socket.io";
 import type { OrderStatus } from "@repo/shared";
 
-const STATUS_FLOW: OrderStatus[] = ["placed", "paid", "packed", "shipped", "delivered"];
+const STATUS_FLOW: OrderStatus[] = [
+  "placed",
+  "paid",
+  "packed",
+  "shipped",
+  "delivered",
+];
 const DELAY_MS = 5000; // 5s between steps for demo
 
 /**

@@ -27,9 +27,12 @@ export async function getCart(userId: string) {
  * Add item to cart (or increment quantity if same product). Creates cart if needed.
  */
 export async function addCartItem(userId: string, body: AddCartItemBody) {
-  const product = await prisma.product.findUnique({ where: { id: body.productId } });
+  const product = await prisma.product.findUnique({
+    where: { id: body.productId },
+  });
   if (!product) throw new AppError(404, "Product not found");
-  if (product.stock < body.quantity) throw new AppError(400, "Insufficient stock");
+  if (product.stock < body.quantity)
+    throw new AppError(400, "Insufficient stock");
 
   let cart = await prisma.cart.findUnique({ where: { userId } });
   if (!cart) cart = await prisma.cart.create({ data: { userId } });
@@ -59,7 +62,11 @@ export async function addCartItem(userId: string, body: AddCartItemBody) {
 /**
  * Update cart item quantity. If 0, remove item.
  */
-export async function updateCartItem(userId: string, itemId: string, body: UpdateCartItemBody) {
+export async function updateCartItem(
+  userId: string,
+  itemId: string,
+  body: UpdateCartItemBody
+) {
   const cart = await prisma.cart.findUnique({ where: { userId } });
   if (!cart) throw new AppError(404, "Cart not found");
 
@@ -71,8 +78,11 @@ export async function updateCartItem(userId: string, itemId: string, body: Updat
   if (body.quantity === 0) {
     await prisma.cartItem.delete({ where: { id: itemId } });
   } else {
-    const product = await prisma.product.findUnique({ where: { id: item.productId } });
-    if (product && product.stock < body.quantity) throw new AppError(400, "Insufficient stock");
+    const product = await prisma.product.findUnique({
+      where: { id: item.productId },
+    });
+    if (product && product.stock < body.quantity)
+      throw new AppError(400, "Insufficient stock");
     await prisma.cartItem.update({
       where: { id: itemId },
       data: { quantity: body.quantity },
