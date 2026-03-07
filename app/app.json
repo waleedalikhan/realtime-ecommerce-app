@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Realtime Commerce",
+    "slug": "realtime-commerce-app",
+    "scheme": "realtime-commerce",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.realtimecommerce.app"
+    },
+    "android": { "package": "com.realtimecommerce.app" },
+    "plugins": ["expo-router", "expo-secure-store"]
+  }
+}

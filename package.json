@@ -1,0 +1,24 @@
+{
+  "name": "realtime-commerce-root",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run --parallel --filter web --filter apis dev",
+    "dev:web": "pnpm --filter web dev",
+    "dev:apis": "pnpm --filter apis dev",
+    "mobile": "pnpm --filter app start",
+    "test": "pnpm -r test --workspace-root",
+    "build": "pnpm --filter shared build && pnpm -r build --filter web --filter apis",
+    "db:generate": "pnpm --filter apis exec prisma generate",
+    "db:migrate": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma migrate deploy",
+    "db:seed": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma db seed",
+    "db:studio": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma studio"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.4.2",
+    "prettier": "^3.2.5",
+    "typescript": "~5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
