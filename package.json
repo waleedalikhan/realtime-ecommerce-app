@@ -7,7 +7,7 @@
     "dev:apis": "pnpm --filter apis dev",
     "mobile": "pnpm --filter app start",
     "test": "pnpm -r test --workspace-root",
-    "build": "pnpm --filter shared build && pnpm -r build --filter web --filter apis",
+    "build": "pnpm --filter shared build && pnpm --filter web build && pnpm --filter apis build",
     "db:generate": "pnpm --filter apis exec prisma generate",
     "db:migrate": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma migrate deploy",
     "db:reset": "pnpm exec dotenv -e .env -- pnpm --filter apis exec prisma migrate reset --force",

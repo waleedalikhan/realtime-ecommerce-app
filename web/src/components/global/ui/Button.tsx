@@ -8,6 +8,7 @@ type Props = {
   disabled?: boolean;
   size?: "sm" | "md";
   variant?: "primary" | "secondary" | "outline";
+  ariaLabel?: string;
 };
 
 const Button: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<Props> = ({
   disabled,
   size = "md",
   variant = "primary",
+  ariaLabel,
 }) => {
   return (
     <button
@@ -37,6 +39,7 @@ const Button: React.FC<Props> = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
+      aria-label={ariaLabel}
     >
       {children}
     </button>

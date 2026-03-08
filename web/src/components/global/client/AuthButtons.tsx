@@ -2,11 +2,18 @@
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import useAuth from "@/hooks/useAuth";
-import { clearAuth } from "@/store/authSlice";
+import { clearAuth, getToken, setAuth } from "@/store/authSlice";
+import { useLayoutEffect } from "react";
 
 const AuthButtons: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    const token = getToken("accessToken") || getToken("refreshToken");
+
+    dispatch(setAuth({ token: token, refreshToken: token, user: null }));
+  }, []);
 
   if (isLoggedIn)
     return (

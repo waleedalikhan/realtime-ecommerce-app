@@ -1,7 +1,3 @@
-/**
- * Socket.io client: connect with token, join user room, listen for order.status_updated.
- * Cleanup on unmount; used by useOrderUpdates hook.
- */
 import { io } from "socket.io-client";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";

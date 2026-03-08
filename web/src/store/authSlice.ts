@@ -6,15 +6,15 @@ type AuthState = {
   user: { id: string; email: string; name: string | null; role: string } | null;
 };
 
-const getToken = (type?: "accessToken" | "refreshToken") => {
+export const getToken = (type?: "accessToken" | "refreshToken") => {
   return typeof window !== "undefined"
     ? localStorage.getItem(type ?? "accessToken")
     : null;
 };
 
 const initialState: AuthState = {
-  token: getToken("accessToken"),
-  refreshToken: getToken("refreshToken"),
+  token: null,
+  refreshToken: null,
   user: null,
 };
 
