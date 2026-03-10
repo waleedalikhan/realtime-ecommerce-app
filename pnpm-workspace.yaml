@@ -1,7 +1,7 @@
-# pnpm workspace: web, app, apis at root; shared types/schemas in packages.
+# pnpm workspace: web, mobile, apis at root; shared types/schemas in packages.
 # Enables: pnpm install (one install), pnpm --filter <name> <script>
 packages:
   - "web"
-  - "app"
+  - "mobile"
   - "apis"
   - "packages/*"

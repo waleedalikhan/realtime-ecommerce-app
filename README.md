@@ -1,12 +1,12 @@
 # Realtime Commerce — Checkout & Order Tracking
 
-Monorepo: **web** (Next.js 15), **app** (React Native / Expo), **apis** (Express), **packages/shared** (Zod + types). JWT auth, cart, checkout with optimistic locking, and live order status updates via Socket.io.
+Monorepo: **web** (Next.js 15), **mobile** (React Native / Expo), **apis** (Express), **packages/shared** (Zod + types). JWT auth, cart, checkout with optimistic locking, and live order status updates via Socket.io.
 
 ## Architecture
 
 - **Clients**: Web (Next.js 15, TanStack Query, Redux, Socket.io client) and Mobile (Expo, Expo Router, secure token storage, Socket.io client).
 - **Backend**: Express + TypeScript, Prisma (PostgreSQL), JWT (access + refresh), REST for catalog/cart/checkout/orders/admin, Socket.io for realtime order events.
-- **Shared**: `packages/shared` exports Zod schemas and types for auth, products, cart, checkout, orders, admin; used for validation on API and in web/app forms.
+- **Shared**: `packages/shared` exports Zod schemas and types for auth, products, cart, checkout, orders, admin; used for validation on API and in web and mobile forms.
 
 ```mermaid
 flowchart LR
@@ -68,7 +68,7 @@ flowchart LR
 | `PORT`                                     | apis  | Server port (default 4000)           |
 | `CORS_ORIGINS`                             | apis  | Comma-separated origins for web/Expo |
 | `NEXT_PUBLIC_API_URL`                      | web   | API base URL for browser             |
-| `EXPO_PUBLIC_API_URL`                      | app   | API base URL for mobile              |
+| `EXPO_PUBLIC_API_URL`                      | mobile | API base URL for mobile              |
 
 ## Demo path
 
@@ -101,7 +101,7 @@ flowchart LR
 | Script             | Description                     |
 | ------------------ | ------------------------------- |
 | `pnpm dev`         | Run web + apis in parallel      |
-| `pnpm mobile`      | Start Expo (app)                |
+| `pnpm mobile`      | Start Expo (mobile)             |
 | `pnpm test`        | Run tests in all workspaces     |
 | `pnpm build`       | Build shared, then web and apis |
 | `pnpm db:generate` | Prisma generate (apis)          |
@@ -112,3 +112,10 @@ flowchart LR
 ## API docs
 
 When the APIs server is running, OpenAPI/Swagger UI is at **http://localhost:4000/api-docs**.
+
+## Backend (apis) documentation
+
+In-depth, beginner-friendly docs for the `apis` folder (with Mermaid diagrams) live in **[docs/](./docs/README.md)**. They cover: overview & architecture, entry point & app setup, database (Prisma), auth, routes/controllers/services, middleware, checkout & orders, real-time (Socket.io), and utilities.
+
+
+ 
