@@ -13,9 +13,7 @@ const mockIo = {
 };
 app.set("io", mockIo as never);
 
-describe.skipIf(!process.env.DATABASE_URL)(
-  "Checkout flow (requires DATABASE_URL)",
-  () => {
+describe("Checkout flow (requires DATABASE_URL)", () => {
     let accessToken: string;
     let orderId: string;
 
@@ -86,5 +84,4 @@ describe.skipIf(!process.env.DATABASE_URL)(
       expect(res.body.id).toBe(orderId);
       expect(res.body.items.length).toBeGreaterThan(0);
     });
-  }
-);
+  });

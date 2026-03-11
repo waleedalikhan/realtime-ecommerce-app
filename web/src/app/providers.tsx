@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import { store } from "@/store";
 import { SocketSubscription } from "@/components/SocketSubscription";
+import CartSidebar from "@/components/global/client/CartSidebar";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>
       <SocketSubscription />
       {children}
+      <CartSidebar />
       <Toaster richColors position="bottom-right" />
     </QueryClientProvider>
   </Provider>

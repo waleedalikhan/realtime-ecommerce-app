@@ -1,6 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { queryKeys } from "@/lib/queryKeys";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ const useProduct = () => {
   const params = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const token = useSelector((s: RootState) => s.auth.token);
   const id = params.id as string;
 
@@ -34,7 +35,7 @@ const useProduct = () => {
         token,
         body: JSON.stringify({ productId: id, quantity: 1 }),
       });
-      toast.success("Item added to cart");
+      await queryClient.invalidateQueries({ queryKey: queryKeys.cart() });
       dispatch(openDrawer());
     } catch (e) {
       toast.error((e as Error).message);

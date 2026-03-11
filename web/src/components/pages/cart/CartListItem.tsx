@@ -14,13 +14,13 @@ const CartListItem: React.FC<Props> = ({
   return (
     <li
       key={item.id}
-      className="flex items-center justify-between rounded-xl border border-stone-800/80 bg-stone-900/40 p-4"
+      className="flex sm:items-center sm:justify-between rounded-xl border border-stone-800/80 bg-stone-900/40 p-4 sm:flex-row flex-col sm:gap-0 gap-4"
     >
       <div>
         <span className="font-medium text-white">{item.product.name}</span>
         <p className="text-sm text-stone-500">${item.product.price} each</p>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 sm:justify-start justify-between">
         <div className="flex items-center gap-1 rounded-lg border border-stone-600 bg-stone-800/40">
           <button
             type="button"

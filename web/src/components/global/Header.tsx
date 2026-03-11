@@ -1,6 +1,6 @@
 import Link from "next/link";
 import AuthButtons from "@/components/global/client/AuthButtons";
-import MobileMenu from "@/components/global/MobileMenu";
+import MobileMenu from "@/components/global/client/MobileMenu";
 import { NAV_LINKS } from "@/constants";
 
 const Header: React.FC = () => {

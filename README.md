@@ -72,7 +72,7 @@ flowchart LR
 
 ## Demo path
 
-1. **Register or login** (web or app).
+1. **Register or login** (web or app) (demo user/pass: demo@example.com/demo1234).
 2. **Browse products** → add items to cart.
 3. **Checkout** → fill shipping address and contact; place order.
 4. **Order confirmation** → redirect to order detail.
@@ -90,12 +90,6 @@ flowchart LR
 - **Realtime**: Single-node Socket.io; for scale, use the Redis adapter so multiple API instances can emit to the same user.
 - **Auth**: Access token short-lived (e.g. 15 min), refresh token longer (e.g. 7 days); mobile stores both in secure storage and uses refresh on 401.
 
-## Line-by-line walkthrough checklist
-
-- **Backend**: Express setup and route mounting; auth flow (register/login/refresh, JWT + middleware); checkout (transaction, optimistic locking, Socket emit); Socket.io (JWT auth, rooms, lifecycle module); one unit test (e.g. hash or cart service) and the checkout integration test.
-- **Web**: TanStack Query (one query and one mutation example, query keys); React Hook Form + Zod (shared schema) on checkout; Redux (auth, cart UI, socket state); WebSocket hook and how it invalidates orders on `order.status_updated`.
-- **Mobile**: API client and 401/refresh; auth and tokens in expo-secure-store; checkout form (RHF + Zod); Socket client and `useOrderUpdates` for live order status.
-
 ## Scripts
 
 | Script             | Description                     |
@@ -112,10 +106,5 @@ flowchart LR
 ## API docs
 
 When the APIs server is running, OpenAPI/Swagger UI is at **http://localhost:4000/api-docs**.
-
-## Backend (apis) documentation
-
-In-depth, beginner-friendly docs for the `apis` folder (with Mermaid diagrams) live in **[docs/](./docs/README.md)**. They cover: overview & architecture, entry point & app setup, database (Prisma), auth, routes/controllers/services, middleware, checkout & orders, real-time (Socket.io), and utilities.
-
 
  
