@@ -11,7 +11,7 @@ if (!ACCESS_SECRET) throw new Error("JWT_ACCESS_SECRET is required");
  * Attach Socket.io to HTTP server. Auth: client sends auth: { token } in handshake;
  * we verify JWT and attach userId to socket, then join room user:${userId}.
  */
-export function attachSocket(httpServer: HttpServer): Server {
+export const attachSocket = (httpServer: HttpServer): Server => {
   const io = new Server(httpServer, {
     cors: {
       origin: process.env.CORS_ORIGINS?.split(",").map((o) => o.trim()) ?? "*",
@@ -48,4 +48,4 @@ export function attachSocket(httpServer: HttpServer): Server {
   });
 
   return io;
-}
+};

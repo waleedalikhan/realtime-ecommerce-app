@@ -5,12 +5,7 @@ import { getSocket, disconnectSocket } from "@/lib/socket";
 import { setConnected, setLastOrderUpdate } from "@/store/socketSlice";
 import { queryKeys } from "@/lib/queryKeys";
 
-/**
- * When user is logged in, connect Socket.io, join user room, listen for order.status_updated.
- * On event: dispatch to Redux and update orders cache so UI updates in real time.
- * Cleanup: only disconnect when token is cleared (logout). Do not disconnect on unmount.
- */
-export function useOrderUpdates(token: string | null) {
+export const useOrderUpdates = (token: string | null) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
@@ -56,4 +51,4 @@ export function useOrderUpdates(token: string | null) {
       s.off("order.status_updated", onStatus);
     };
   }, [token, dispatch, queryClient]);
-}
+};

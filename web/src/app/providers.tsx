@@ -8,14 +8,12 @@ import { SocketSubscription } from "@/components/SocketSubscription";
 
 const queryClient = new QueryClient();
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <SocketSubscription />
-        {children}
-        <Toaster richColors position="bottom-right" />
-      </QueryClientProvider>
-    </Provider>
-  );
-}
+export const Providers = ({ children }: { children: React.ReactNode }) => (
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <SocketSubscription />
+      {children}
+      <Toaster richColors position="bottom-right" />
+    </QueryClientProvider>
+  </Provider>
+);

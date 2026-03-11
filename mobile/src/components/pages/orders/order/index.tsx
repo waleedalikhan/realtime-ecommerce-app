@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { useOrderUpdates } from "@/hooks/useOrderUpdates";
 import AuthWall from "@/components/global/AuthWall";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import { orderStyles as styles } from "@/styles/Orders.styles";
 
 const Order: React.FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -20,7 +20,7 @@ const Order: React.FC = () => {
 
   const { data: order, isLoading } = useQuery({
     queryKey: queryKeys.order(orderId),
-    queryFn: () => api<Order>(`/orders/${orderId}`, { token: token ?? undefined }),
+    queryFn: () => api<Order>(`/orders/${orderId}`, { token: token ?? null }),
     enabled: !!token && !!orderId,
   });
 
@@ -50,9 +50,7 @@ const Order: React.FC = () => {
       </Pressable>
       <View style={styles.card}>
         <View style={styles.header}>
-          <Text style={styles.title}>
-            Order {order.id.slice(0, 8)}...
-          </Text>
+          <Text style={styles.title}>Order {order.id.slice(0, 8)}...</Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{order.status}</Text>
           </View>
@@ -81,76 +79,5 @@ const Order: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    maxWidth: 672,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  loading: { ...typography.base, color: colors.stone[400] },
-  backBtn: { marginBottom: spacing.gap[2] },
-  backLink: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[400],
-  },
-  backText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.amber[400],
-  },
-  card: {
-    marginTop: spacing.gap[2],
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    padding: spacing.gap[8],
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  title: {
-    ...typography["2xl"],
-    ...typography.fontBold,
-    color: colors.white,
-  },
-  badge: {
-    borderRadius: 9999,
-    backgroundColor: "rgba(245,158,11,0.2)",
-    paddingHorizontal: spacing.gap[2],
-    paddingVertical: 4,
-  },
-  badgeText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.amber[400],
-  },
-  live: {
-    marginTop: spacing.gap[2],
-    ...typography.sm,
-    color: colors.stone[500],
-  },
-  dl: { marginTop: spacing.gap[2] },
-  dlRow: { marginBottom: spacing.gap[2] },
-  dt: { ...typography.sm, color: colors.stone[500] },
-  dd: { ...typography.sm, color: colors.stone[300] },
-  itemsTitle: {
-    marginTop: spacing.gap[2],
-    ...typography.base,
-    ...typography.fontSemibold,
-    color: colors.white,
-  },
-  items: { marginTop: spacing.gap[2] },
-  itemText: {
-    ...typography.sm,
-    color: colors.stone[400],
-    marginBottom: 4,
-  },
-});
 
 export default Order;

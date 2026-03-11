@@ -13,7 +13,7 @@ import { queryKeys } from "@/lib/queryKeys";
  * Cleanup: only disconnect when token is cleared (logout). Do not disconnect on unmount,
  * so the socket stays connected when navigating (e.g. from /orders/[id] to /orders).
  */
-export function useOrderUpdates(token: string | null) {
+export const useOrderUpdates = (token: string | null) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
@@ -63,4 +63,4 @@ export function useOrderUpdates(token: string | null) {
       // the socket so /orders no longer receives events. Only disconnect when token is null.
     };
   }, [token, dispatch, queryClient]);
-}
+};

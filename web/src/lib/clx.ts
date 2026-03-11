@@ -7,7 +7,7 @@ type ClassValue =
   | ClassValue[]
   | Record<string, boolean | undefined | null>;
 
-function parseClassValue(value: ClassValue): string[] {
+const parseClassValue = (value: ClassValue): string[] => {
   if (
     value === undefined ||
     value === null ||
@@ -31,7 +31,7 @@ function parseClassValue(value: ClassValue): string[] {
       .map(([k]) => k);
   }
   return [];
-}
-export function cn(...inputs: ClassValue[]): string {
-  return inputs.flatMap(parseClassValue).filter(Boolean).join(" ").trim();
-}
+};
+
+export const cn = (...inputs: ClassValue[]): string =>
+  inputs.flatMap(parseClassValue).filter(Boolean).join(" ").trim();

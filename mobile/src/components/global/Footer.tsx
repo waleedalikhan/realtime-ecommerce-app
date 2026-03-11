@@ -1,70 +1,58 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { Link } from "expo-router";
-import { colors, spacing, typography } from "@/lib/theme";
+import { View, Text, Pressable } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
+import { Link, usePathname } from "expo-router";
+import { colors } from "@/lib/theme";
+import styles from "@/styles/Footer.styles";
 
-const FOOTER_LINKS = [
-  { href: "/products", label: "Products" },
-  { href: "/cart", label: "Cart" },
-  { href: "/orders", label: "Orders" },
-  { href: "/login", label: "Log in" },
-  { href: "/register", label: "Sign up" },
+const TABS = [
+  { href: "/products", label: "Products", icon: "box" as const },
+  { href: "/cart", label: "Cart", icon: "shopping-cart" as const },
+  { href: "/orders", label: "Orders", icon: "file-text" as const },
 ];
 
 const Footer: React.FC = () => {
+  const pathname = usePathname();
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.footer}>
+    <View
+      style={[
+        styles.footer,
+        { paddingBottom: Math.max(insets.bottom, styles.footer.paddingBottom) },
+      ]}
+    >
       <View style={styles.inner}>
-        <Text style={styles.brand}>Realtime Commerce</Text>
-        <View style={styles.nav}>
-          {FOOTER_LINKS.map((link) => (
-            <Link key={link.href} href={link.href as any} asChild>
-              <Pressable style={({ pressed }) => [pressed && styles.pressed]}>
-                <Text style={styles.linkText}>{link.label}</Text>
+        {TABS.map((tab) => {
+          const active = pathname.startsWith(tab.href);
+          return (
+            <Link key={tab.href} href={tab.href as any} asChild>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.tab,
+                  active && styles.tabActive,
+                  pressed && styles.pressed,
+                ]}
+              >
+                <Feather
+                  name={tab.icon}
+                  size={20}
+                  color={active ? colors.amber[400] : colors.stone[600]}
+                  style={styles.icon}
+                  width={20}
+                  height={20}
+                />
+                <Text style={[styles.label, active && styles.labelActive]}>
+                  {tab.label}
+                </Text>
               </Pressable>
             </Link>
-          ))}
-        </View>
+          );
+        })}
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    borderTopWidth: 1,
-    borderTopColor: "rgba(41,37,36,0.5)",
-    backgroundColor: "rgba(12,10,9,0.8)",
-    paddingVertical: spacing.gap[10],
-  },
-  inner: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: spacing.px,
-    gap: spacing.gap[6],
-    maxWidth: 1152,
-    alignSelf: "center",
-    width: "100%",
-  },
-  brand: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[500],
-  },
-  nav: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: spacing.gap[6],
-  },
-  linkText: {
-    ...typography.sm,
-    color: colors.stone[500],
-  },
-  pressed: { opacity: 0.7 },
-});
 
 export default Footer;

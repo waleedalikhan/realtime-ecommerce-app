@@ -7,7 +7,7 @@ type ProductMeta = {
   description: string | null;
 };
 
-async function getProduct(id: string): Promise<ProductMeta | null> {
+const getProduct = async (id: string): Promise<ProductMeta | null> => {
   try {
     const res = await fetch(`${BASE}/products/${id}`, {
       next: { revalidate: 60 },
@@ -18,14 +18,16 @@ async function getProduct(id: string): Promise<ProductMeta | null> {
   } catch {
     return null;
   }
-}
+};
 
 type Props = {
   params: Promise<{ id: string }>;
   children: React.ReactNode;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
   const { id } = await params;
   const product = await getProduct(id);
 
@@ -49,8 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
     },
   };
-}
+};
 
-export default function ProductDetailLayout({ children }: Props) {
-  return children;
-}
+const ProductDetailLayout = ({ children }: Props) => children;
+
+export default ProductDetailLayout;

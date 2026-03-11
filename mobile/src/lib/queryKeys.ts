@@ -1,4 +1,3 @@
-/** TanStack Query keys for cache invalidation */
 export const queryKeys = {
   products: (
     params?: Record<string, unknown>

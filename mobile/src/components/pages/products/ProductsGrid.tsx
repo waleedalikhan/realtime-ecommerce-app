@@ -1,8 +1,8 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import useProducts from "@/hooks/useProducts";
 import ProductCard from "@/components/pages/products/ProductCard";
-import { spacing } from "@/lib/theme";
+import { productsGridStyles as styles } from "@/styles/Products.styles";
 
 const ProductsGrid: React.FC = () => {
   const { data, productImageUrl } = useProducts();
@@ -17,19 +17,5 @@ const ProductsGrid: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  grid: {
-    marginTop: spacing.gap[2],
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.gap[2],
-  },
-  cardWrap: {
-    flex: 1,
-    minWidth: 140,
-    maxWidth: 400,
-  },
-});
 
 export default ProductsGrid;

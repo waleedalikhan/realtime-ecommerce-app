@@ -22,7 +22,7 @@ export type AuthResult = {
 /**
  * Register: hash password, create user, return tokens.
  */
-export async function register(data: RegisterBody): Promise<AuthResult> {
+export const register = async (data: RegisterBody): Promise<AuthResult> => {
   const existing = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -61,12 +61,12 @@ export async function register(data: RegisterBody): Promise<AuthResult> {
     refreshToken,
     user: { id: user.id, email: user.email, name: user.name, role: user.role },
   };
-}
+};
 
 /**
  * Login: verify password, return tokens.
  */
-export async function login(data: LoginBody): Promise<AuthResult> {
+export const login = async (data: LoginBody): Promise<AuthResult> => {
   const user = await prisma.user.findUnique({ where: { email: data.email } });
   if (!user) throw new AppError(401, "Invalid email or password");
 
@@ -96,18 +96,18 @@ export async function login(data: LoginBody): Promise<AuthResult> {
     refreshToken,
     user: { id: user.id, email: user.email, name: user.name, role: user.role },
   };
-}
+};
 
 /**
  * Refresh: validate refresh token from DB, issue new access (and optionally rotate refresh).
  */
-export async function refresh(
+export const refresh = async (
   refreshToken: string
 ): Promise<{
   accessToken: string;
   refreshToken: string;
   user: AuthResult["user"];
-}> {
+}> => {
   verifyToken<{ sub: string }>(refreshToken, REFRESH_SECRET);
   const stored = await prisma.refreshToken.findUnique({
     where: { token: refreshToken },
@@ -146,4 +146,4 @@ export async function refresh(
     refreshToken: newRefresh,
     user: { id: user.id, email: user.email, name: user.name, role: user.role },
   };
-}
+};

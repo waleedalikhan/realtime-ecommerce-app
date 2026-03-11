@@ -11,8 +11,8 @@ import { updateOrderStatus } from "./orderService.js";
 /**
  * Create product (admin).
  */
-export async function createProduct(body: AdminCreateProductBody) {
-  return prisma.product.create({
+export const createProduct = async (body: AdminCreateProductBody) =>
+  prisma.product.create({
     data: {
       name: body.name,
       description: body.description ?? null,
@@ -21,12 +21,14 @@ export async function createProduct(body: AdminCreateProductBody) {
       stock: body.stock ?? 0,
     },
   });
-}
 
 /**
  * Update product (admin); partial fields.
  */
-export async function updateProduct(id: string, body: AdminUpdateProductBody) {
+export const updateProduct = async (
+  id: string,
+  body: AdminUpdateProductBody
+) => {
   const product = await prisma.product.findUnique({ where: { id } });
   if (!product) throw new AppError(404, "Product not found");
 
@@ -40,17 +42,17 @@ export async function updateProduct(id: string, body: AdminUpdateProductBody) {
       ...(body.stock != null && { stock: body.stock }),
     },
   });
-}
+};
 
 /**
  * Force order status update (admin); emits order.status_updated.
  */
-export async function setOrderStatus(
+export const setOrderStatus = async (
   orderId: string,
   body: AdminOrderStatusBody,
   io?: SocketServer
-) {
+) => {
   const order = await prisma.order.findUnique({ where: { id: orderId } });
   if (!order) throw new AppError(404, "Order not found");
   return updateOrderStatus(orderId, body.status, io);
-}
+};

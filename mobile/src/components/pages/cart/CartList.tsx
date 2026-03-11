@@ -1,31 +1,32 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import CartListItem from "@/components/pages/cart/CartListItem";
-import { spacing } from "@/lib/theme";
+import { cartListStyles as styles } from "@/styles/Cart.styles";
 
-type CartListProps = {
+type Props = {
   cart: Cart;
   onRemove?: (id: string) => void;
   onUpdateQuantity?: (itemId: string, quantity: number) => void;
   isUpdating?: boolean;
 };
 
-const CartList: React.FC<CartListProps> = (props) => (
+const CartList: React.FC<Props> = ({
+  cart,
+  onRemove,
+  onUpdateQuantity,
+  isUpdating,
+}) => (
   <View style={styles.list}>
-    {props.cart.items.map((item) => (
+    {cart.items.map((item) => (
       <CartListItem
         key={item.id}
         item={item}
-        onRemove={props.onRemove}
-        onUpdateQuantity={props.onUpdateQuantity}
-        disabled={props.isUpdating}
+        onRemove={onRemove}
+        onUpdateQuantity={onUpdateQuantity}
+        disabled={isUpdating}
       />
     ))}
   </View>
 );
-
-const styles = StyleSheet.create({
-  list: { marginTop: spacing.gap[8] },
-});
 
 export default CartList;

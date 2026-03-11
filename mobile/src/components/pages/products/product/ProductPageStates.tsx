@@ -1,19 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { Link, useRouter } from "expo-router";
-import { colors, spacing, borderRadius } from "@/lib/theme";
+import { View, Text, Pressable } from "react-native";
+import { useRouter } from "expo-router";
+import { productPageStatesStyles as styles } from "@/styles/Product.styles";
 
-type ProductPageStatesProps = {
+type Props = {
   isLoading?: boolean;
   error?: Error | null;
   product?: Product | null;
 };
 
-const ProductPageStates: React.FC<ProductPageStatesProps> = ({
-  isLoading,
-  error,
-  product,
-}) => {
+const ProductPageStates: React.FC<Props> = ({ isLoading, error, product }) => {
   const router = useRouter();
 
   if (isLoading) {
@@ -48,48 +44,5 @@ const ProductPageStates: React.FC<ProductPageStatesProps> = ({
 
   return null;
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    maxWidth: 1024,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  skeleton: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    overflow: "hidden",
-    flexDirection: "row",
-  },
-  skeletonImage: {
-    width: "50%",
-    aspectRatio: 1,
-    backgroundColor: colors.stone[800],
-  },
-  skeletonContent: { flex: 1, padding: spacing.gap[8] },
-  skeletonLine: {
-    height: 12,
-    borderRadius: 4,
-    backgroundColor: colors.stone[700],
-    marginTop: spacing.gap[4],
-  },
-  skeletonBtn: {
-    marginTop: spacing.gap[2],
-    height: 40,
-    width: 96,
-    borderRadius: 8,
-    backgroundColor: colors.stone[700],
-  },
-  errorText: { color: colors.red[400] },
-  backBtn: { marginTop: spacing.gap[4] },
-  backText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: colors.amber[400],
-  },
-});
 
 export default ProductPageStates;

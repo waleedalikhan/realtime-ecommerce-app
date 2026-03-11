@@ -1,11 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
-import { Link, useRouter } from "expo-router";
+import { View, Pressable, Text } from "react-native";
+import { useRouter } from "expo-router";
 import useProduct from "@/hooks/useProduct";
 import ProductPageStates from "@/components/pages/products/product/ProductPageStates";
 import ProductImage from "@/components/pages/products/product/ProductImage";
 import ProductDetails from "@/components/pages/products/product/ProductDetails";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import { productStyles as styles } from "@/styles/Product.styles";
 
 const Product: React.FC = () => {
   const { product, isLoading, error, addToCart, productImageUrl } =
@@ -15,7 +15,9 @@ const Product: React.FC = () => {
 
   if (isLoading) return <ProductPageStates isLoading />;
   if (error || !product)
-    return <ProductPageStates error={error ?? undefined} product={product ?? null} />;
+    return (
+      <ProductPageStates error={error ?? null} product={product ?? null} />
+    );
 
   return (
     <View style={styles.wrap}>
@@ -32,7 +34,7 @@ const Product: React.FC = () => {
           <ProductDetails
             category={product.category}
             name={product.name}
-            description={product.description ?? undefined}
+            description={product.description ?? ""}
             price={product.price}
             stock={product.stock}
             addToCart={addToCart}
@@ -42,30 +44,5 @@ const Product: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    maxWidth: 1024,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  backLink: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[400],
-  },
-  article: {
-    marginTop: spacing.gap[2],
-    overflow: "hidden",
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-  },
-  grid: {
-    flexDirection: "column",
-  },
-});
 
 export default Product;

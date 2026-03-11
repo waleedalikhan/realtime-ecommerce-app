@@ -3,11 +3,11 @@ import { listProducts, getProductById } from "../services/productService.js";
 import { AppError } from "../utils/errors.js";
 
 /** GET /products — list with pagination, category, sort */
-export async function listHandler(
+export const listHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const query = req.query as unknown as Parameters<typeof listProducts>[0];
     const result = await listProducts(query);
@@ -16,14 +16,14 @@ export async function listHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** GET /products/:id — single product */
-export async function getByIdHandler(
+export const getByIdHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const { id } = req.params as { id: string };
     const product = await getProductById(id);
@@ -36,4 +36,4 @@ export async function getByIdHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};

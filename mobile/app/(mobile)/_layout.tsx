@@ -4,7 +4,7 @@ import Header from "@/components/global/Header";
 import Footer from "@/components/global/Footer";
 import { colors } from "@/lib/theme";
 
-export default function WebLayout() {
+export default function MobileLayout() {
   return (
     <View style={styles.container}>
       <Header />

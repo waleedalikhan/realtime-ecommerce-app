@@ -4,7 +4,7 @@ import type { ProductsQuery } from "@repo/shared";
 /**
  * List products with pagination, optional category filter, search, and sort by price.
  */
-export async function listProducts(query: ProductsQuery) {
+export const listProducts = async (query: ProductsQuery) => {
   const { page, limit, category, sort, search } = query;
   const skip = (page - 1) * limit;
 
@@ -43,13 +43,13 @@ export async function listProducts(query: ProductsQuery) {
     limit,
     categories: categories.map((c) => c.category),
   };
-}
+};
 
 /**
  * Get a single product by id.
  */
-export async function getProductById(id: string) {
+export const getProductById = async (id: string) => {
   const product = await prisma.product.findUnique({ where: { id } });
   if (!product) return null;
   return product;
-}
+};

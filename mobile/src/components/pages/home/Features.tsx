@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { IconLI, IconOT, IconSC } from "@/components/icons";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import { homeFeaturesStyles as styles } from "@/styles/Home.styles";
 
 const features = [
   {
@@ -40,58 +40,5 @@ const Features: React.FC = () => (
     </View>
   </View>
 );
-
-const styles = StyleSheet.create({
-  section: {
-    borderTopWidth: 1,
-    borderTopColor: "rgba(41,37,36,0.5)",
-    backgroundColor: "rgba(12,10,9,0.5)",
-    paddingVertical: spacing.gap[8],
-  },
-  inner: {
-    maxWidth: 1152,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  heading: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    letterSpacing: 2,
-    color: colors.stone[500],
-    textAlign: "center",
-    textTransform: "uppercase",
-  },
-  grid: {
-    marginTop: spacing.gap[8],
-    gap: spacing.gap[8],
-  },
-  card: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    padding: spacing.gap[2],
-  },
-  iconWrap: {
-    width: 40,
-    height: 40,
-    borderRadius: borderRadius.lg,
-    backgroundColor: "rgba(245,158,11,0.1)",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: spacing.gap[4],
-  },
-  cardTitle: {
-    ...typography.lg,
-    ...typography.fontSemibold,
-    color: colors.white,
-  },
-  cardDesc: {
-    marginTop: spacing.gap[2],
-    ...typography.base,
-    color: colors.stone[400],
-  },
-});
 
 export default Features;

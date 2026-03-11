@@ -1,11 +1,12 @@
 import React, { useLayoutEffect } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useDispatch } from "react-redux";
-import { useRouter, Link } from "expo-router";
+import { useRouter } from "expo-router";
 import useAuth from "@/hooks/useAuth";
 import { setAuth, clearAuth } from "@/store/authSlice";
 import { getStoredToken, clearStoredTokens } from "@/store/authStorage";
-import { colors, spacing, typography } from "@/lib/theme";
+import Button from "@/components/global/ui/Button";
+import styles from "@/styles/AuthButtons.styles";
 
 const AuthButtons: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -36,61 +37,39 @@ const AuthButtons: React.FC = () => {
 
   if (isLoggedIn) {
     return (
-      <Pressable
+      <Button
         onPress={handleLogout}
-        style={({ pressed }) => [styles.navBtn, pressed && styles.pressed]}
+        size="sm"
+        variant="outline"
+        textStyle={styles.logoutText}
       >
-        <Text style={styles.navBtnText}>Log out</Text>
-      </Pressable>
+        Log out
+      </Button>
     );
   }
 
   return (
     <View style={styles.wrapper}>
-      <Link href="/login" asChild>
-        <Pressable style={({ pressed }) => [styles.navBtn, pressed && styles.pressed]}>
-          <Text style={styles.navBtnText}>Log in</Text>
-        </Pressable>
-      </Link>
+      <Button
+        size="xs"
+        variant="outline"
+        style={styles.loginBtn}
+        textStyle={styles.loginText}
+        onPress={() => router.push("/login")}
+      >
+        Log in
+      </Button>
       <View style={styles.divider} />
-      <Link href="/register" asChild>
-        <Pressable style={({ pressed }) => [styles.signUpBtn, pressed && styles.pressed]}>
-          <Text style={styles.signUpText}>Sign up</Text>
-        </Pressable>
-      </Link>
+      <Button
+        size="xs"
+        style={styles.signUpBtn}
+        textStyle={styles.signUpText}
+        onPress={() => router.push("/register")}
+      >
+        Sign up
+      </Button>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: { flexDirection: "row", alignItems: "center", gap: spacing.gap[1] },
-  navBtn: {
-    paddingHorizontal: spacing.gap[4],
-    paddingVertical: spacing.gap[2],
-    borderRadius: 8,
-  },
-  signUpBtn: {
-    paddingHorizontal: spacing.gap[4],
-    paddingVertical: spacing.gap[2],
-    borderRadius: 8,
-    backgroundColor: colors.amber[500],
-  },
-  pressed: { opacity: 0.8 },
-  navBtnText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[400],
-  },
-  signUpText: {
-    ...typography.sm,
-    ...typography.fontSemibold,
-    color: colors.background,
-  },
-  divider: {
-    width: 1,
-    height: 16,
-    backgroundColor: colors.stone[700],
-  },
-});
 
 export default AuthButtons;

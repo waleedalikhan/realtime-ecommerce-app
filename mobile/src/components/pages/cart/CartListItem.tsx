@@ -1,15 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import { View, Text, Pressable } from "react-native";
+import { cartListItemStyles as styles } from "@/styles/Cart.styles";
 
-type CartListItemProps = {
+type Props = {
   item: CartItem;
-  onRemove?: (id: string) => void;
-  onUpdateQuantity?: (itemId: string, quantity: number) => void;
-  disabled?: boolean;
+  onRemove?: ((id: string) => void) | undefined;
+  onUpdateQuantity?: ((itemId: string, quantity: number) => void) | undefined;
+  disabled?: boolean | undefined;
 };
 
-const CartListItem: React.FC<CartListItemProps> = ({
+const CartListItem: React.FC<Props> = ({
   item,
   onRemove,
   onUpdateQuantity,
@@ -47,56 +47,5 @@ const CartListItem: React.FC<CartListItemProps> = ({
     </View>
   </View>
 );
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    padding: spacing.gap[4],
-    marginBottom: spacing.gap[4],
-  },
-  info: {},
-  name: { ...typography.fontMedium, color: colors.white },
-  price: { ...typography.sm, color: colors.stone[500] },
-  actions: { flexDirection: "row", alignItems: "center", gap: spacing.gap[2] },
-  qtyWrap: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.gap[1],
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.stone[600],
-    backgroundColor: "rgba(41,37,36,0.4)",
-  },
-  qtyBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  qtyBtnText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[300],
-  },
-  qtyValue: {
-    minWidth: 24,
-    textAlign: "center",
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.stone[300],
-  },
-  disabled: { opacity: 0.5 },
-  removeBtn: { paddingHorizontal: spacing.gap[2], paddingVertical: 6 },
-  pressed: { opacity: 0.8 },
-  removeText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.red[400],
-  },
-});
 
 export default CartListItem;

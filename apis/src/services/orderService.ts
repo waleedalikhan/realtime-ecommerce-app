@@ -7,19 +7,19 @@ import type { Server as SocketServer } from "socket.io";
 /**
  * List orders for user (or all for admin if needed; here we filter by userId only).
  */
-export async function listOrders(user: TokenPayload) {
+export const listOrders = async (user: TokenPayload) => {
   const orders = await prisma.order.findMany({
     where: { userId: user.sub },
     include: { items: { include: { product: true } } },
     orderBy: { createdAt: "desc" },
   });
   return orders;
-}
+};
 
 /**
  * Get one order by id; must belong to user (or admin can see any).
  */
-export async function getOrderById(orderId: string, user: TokenPayload) {
+export const getOrderById = async (orderId: string, user: TokenPayload) => {
   const order = await prisma.order.findUnique({
     where: { id: orderId },
     include: { items: { include: { product: true } } },
@@ -28,16 +28,16 @@ export async function getOrderById(orderId: string, user: TokenPayload) {
   if (order.userId !== user.sub && user.role !== "admin")
     throw new AppError(403, "Forbidden");
   return order;
-}
+};
 
 /**
  * Update order status (admin). Emit order.status_updated to user room.
  */
-export async function updateOrderStatus(
+export const updateOrderStatus = async (
   orderId: string,
   status: OrderStatus,
   io?: SocketServer
-) {
+) => {
   const order = await prisma.order.update({
     where: { id: orderId },
     data: { status },
@@ -51,4 +51,4 @@ export async function updateOrderStatus(
     });
   }
   return order;
-}
+};

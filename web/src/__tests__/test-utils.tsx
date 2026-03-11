@@ -12,39 +12,36 @@ export const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false } },
 });
 
-function createStore(preloadedState?: Partial<RootState>) {
-  return configureStore({
+const createStore = (preloadedState?: Partial<RootState>) =>
+  configureStore({
     reducer: {
-      auth: authReducer,
-      cartUi: cartUiReducer,
-      socket: socketReducer,
+      auth: authReducer as any,
+      cartUi: cartUiReducer as any,
+      socket: socketReducer as any,
     },
     preloadedState,
   });
-}
 
 const defaultStore = createStore();
 
-function AllTheProviders({
+const AllTheProviders = ({
   children,
   store = defaultStore,
 }: {
   children: React.ReactNode;
   store?: ReturnType<typeof createStore>;
-}) {
-  return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </Provider>
-  );
-}
+}) => (
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </Provider>
+);
 
-export function renderWithProviders(
+export const renderWithProviders = (
   ui: React.ReactElement,
   options?: Omit<RenderOptions, "wrapper"> & {
     preloadedState?: Partial<RootState>;
   }
-) {
+) => {
   const { preloadedState, ...renderOptions } = options ?? {};
   const store = preloadedState ? createStore(preloadedState) : defaultStore;
   return render(ui, {
@@ -53,4 +50,4 @@ export function renderWithProviders(
     ),
     ...renderOptions,
   });
-}
+};

@@ -4,11 +4,11 @@ import type { RegisterBody, LoginBody } from "@repo/shared";
 import { AppError } from "../utils/errors.js";
 
 /** POST /auth/register — body validated by middleware; register and return tokens */
-export async function registerHandler(
+export const registerHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const result = await register(req.body as RegisterBody);
     res.status(201).json(result);
@@ -16,14 +16,14 @@ export async function registerHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(new AppError(400, "Invalid body"));
   }
-}
+};
 
 /** POST /auth/login — body validated by middleware; login and return tokens */
-export async function loginHandler(
+export const loginHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const result = await login(req.body as LoginBody);
     res.json(result);
@@ -31,14 +31,14 @@ export async function loginHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(new AppError(400, "Invalid body"));
   }
-}
+};
 
 /** POST /auth/refresh — body.refreshToken or cookie; return new tokens */
-export async function refreshHandler(
+export const refreshHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const body = req.body as { refreshToken?: string };
     const token =
@@ -54,12 +54,12 @@ export async function refreshHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(new AppError(401, "Invalid refresh token"));
   }
-}
+};
 
 /** GET /auth/me — return current user (used by app to restore session) */
-export async function meHandler(req: Request, res: Response): Promise<void> {
+export const meHandler = async (req: Request, res: Response): Promise<void> => {
   const user = (
     req as Request & { user: { sub: string; email: string; role: string } }
   ).user;
   res.json({ id: user.sub, email: user.email, name: null, role: user.role });
-}
+};

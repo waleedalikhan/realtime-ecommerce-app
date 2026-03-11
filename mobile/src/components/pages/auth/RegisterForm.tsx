@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { Link } from "expo-router";
 import { Controller } from "react-hook-form";
 import useRegister from "@/hooks/useRegister";
 import InputField from "@/components/global/ui/Input";
 import { IconLoader } from "@/components/icons";
 import Button from "@/components/global/ui/Button";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import styles from "@/styles/RegisterForm.styles";
 
 const RegisterForm: React.FC = () => {
   const { control, handleSubmit, errors, onSubmit, loading } = useRegister();
@@ -67,15 +67,9 @@ const RegisterForm: React.FC = () => {
           {errors.root && (
             <Text style={styles.rootError}>{errors.root.message}</Text>
           )}
-          <Pressable
-            onPress={handleSubmit(onSubmit)}
-            disabled={loading}
-            style={({ pressed }) => [pressed && styles.pressed]}
-          >
-            <Button disabled={loading}>
-              {loading ? <IconLoader /> : "Register"}
-            </Button>
-          </Pressable>
+          <Button disabled={loading} onPress={handleSubmit(onSubmit)}>
+            {loading ? <IconLoader /> : "Register"}
+          </Button>
         </View>
         <Text style={styles.footer}>
           Already have an account?{" "}
@@ -87,48 +81,5 @@ const RegisterForm: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    maxWidth: 448,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  card: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    padding: spacing.gap[8],
-  },
-  title: {
-    ...typography["2xl"],
-    ...typography.fontBold,
-    color: colors.white,
-  },
-  subtitle: {
-    marginTop: spacing.gap[2],
-    ...typography.base,
-    color: colors.stone[400],
-  },
-  form: { marginTop: spacing.gap[2] },
-  rootError: {
-    ...typography.sm,
-    color: colors.red[400],
-    marginBottom: spacing.gap[2],
-  },
-  pressed: { opacity: 0.9 },
-  footer: {
-    marginTop: spacing.gap[2],
-    ...typography.sm,
-    color: colors.stone[400],
-    textAlign: "center",
-  },
-  link: {
-    ...typography.fontMedium,
-    color: colors.amber[400],
-  },
-});
 
 export default RegisterForm;

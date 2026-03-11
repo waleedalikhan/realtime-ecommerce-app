@@ -3,12 +3,12 @@ import { AppError } from "../utils/errors.js";
 import { logger } from "../utils/logger.js";
 
 /** Global error handler: map AppError to JSON { statusCode, message, details? }; log and 500 for unknown. */
-export function errorHandler(
+export const errorHandler = (
   err: unknown,
   _req: Request,
   res: Response,
   _next: NextFunction
-): void {
+): void => {
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       statusCode: err.statusCode,
@@ -22,4 +22,4 @@ export function errorHandler(
     statusCode: 500,
     message: "Internal server error",
   });
-}
+};

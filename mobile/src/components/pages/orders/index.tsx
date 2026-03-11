@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import useOrders from "@/hooks/useOrders";
 import AuthWall from "@/components/global/AuthWall";
 import OrderEmpty from "@/components/pages/orders/OrderEmpty";
 import OrderList from "@/components/pages/orders/OrderList";
-import { colors, spacing, typography } from "@/lib/theme";
+import { ordersStyles as styles } from "@/styles/Orders.styles";
 
 const Orders: React.FC = () => {
   const { orders, isLoading, lastOrderUpdate, refetch, token } = useOrders();
@@ -33,25 +33,5 @@ const Orders: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    maxWidth: 672,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  loading: { fontSize: 16, color: colors.stone[400] },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: colors.white,
-  },
-  subtitle: {
-    marginTop: 4,
-    fontSize: 16,
-    color: colors.stone[400],
-  },
-});
 
 export default Orders;

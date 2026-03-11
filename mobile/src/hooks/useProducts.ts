@@ -14,7 +14,7 @@ type SearchParams = {
   search?: string;
 };
 
-function getParams(
+const getParams = (
   params: SearchParams,
   overrides: ParamsOverrides = {}
 ): {
@@ -23,34 +23,34 @@ function getParams(
   category: string | undefined;
   sort: "price_asc" | "price_desc" | undefined;
   search: string | undefined;
-} {
-  return {
-    page: overrides.page ?? (Number(params.page) || 1),
-    limit: overrides.limit ?? (Number(params.limit) || 6),
-    category:
-      overrides.category !== undefined
-        ? overrides.category
-        : (params.category ?? undefined),
-    sort:
-      overrides.sort !== undefined
-        ? overrides.sort
-        : ((params.sort as "price_asc" | "price_desc") ?? undefined),
-    search:
-      overrides.search !== undefined
-        ? overrides.search
-        : (params.search ?? undefined),
-  };
-}
+} => ({
+  page: overrides.page ?? (Number(params.page) || 1),
+  limit: overrides.limit ?? (Number(params.limit) || 6),
+  category:
+    overrides.category !== undefined
+      ? overrides.category
+      : (params.category ?? undefined),
+  sort:
+    overrides.sort !== undefined
+      ? overrides.sort
+      : ((params.sort as "price_asc" | "price_desc") ?? undefined),
+  search:
+    overrides.search !== undefined
+      ? overrides.search
+      : (params.search ?? undefined),
+});
 
-function buildQueryString(params: Record<string, string | number | undefined>) {
+const buildQueryString = (
+  params: Record<string, string | number | undefined>
+) => {
   const q = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {
     if (v !== undefined && v !== "" && v !== "all") q.set(k, String(v));
   });
   return q.toString();
-}
+};
 
-export default function useProducts() {
+const useProducts = () => {
   const router = useRouter();
   const searchParams = useLocalSearchParams<SearchParams>();
   const token = useSelector((s: RootState) => s.auth.token);
@@ -120,4 +120,6 @@ export default function useProducts() {
     to,
     categories,
   };
-}
+};
+
+export default useProducts;

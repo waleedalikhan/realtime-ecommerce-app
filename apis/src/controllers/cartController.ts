@@ -8,18 +8,18 @@ import {
 import type { TokenPayload } from "../utils/jwt.js";
 import { AppError } from "../utils/errors.js";
 
-function getUserId(req: Request): string {
+const getUserId = (req: Request): string => {
   const user = (req as Request & { user?: TokenPayload }).user;
   if (!user) throw new AppError(401, "Unauthorized");
   return user.sub;
-}
+};
 
 /** GET /cart */
-export async function getHandler(
+export const getHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const cart = await getCart(getUserId(req));
     res.json(cart);
@@ -27,14 +27,14 @@ export async function getHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** POST /cart/items */
-export async function addItemHandler(
+export const addItemHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const body = req.body as { productId: string; quantity: number };
     const cart = await addCartItem(getUserId(req), body);
@@ -43,14 +43,14 @@ export async function addItemHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** PATCH /cart/items/:itemId */
-export async function updateItemHandler(
+export const updateItemHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const { itemId } = req.params as { itemId: string };
     const body = req.body as { quantity: number };
@@ -60,14 +60,14 @@ export async function updateItemHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** DELETE /cart/items/:itemId */
-export async function removeItemHandler(
+export const removeItemHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const { itemId } = req.params as { itemId: string };
     const cart = await removeCartItem(getUserId(req), itemId);
@@ -76,4 +76,4 @@ export async function removeItemHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};

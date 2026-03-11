@@ -1,14 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { colors, spacing, borderRadius, typography } from "@/lib/theme";
+import { View, Text } from "react-native";
+import { productsPageStatesStyles as styles } from "@/styles/Products.styles";
 
-type ProductsPageStatesProps = {
+type Props = {
   isLoading?: boolean;
   error?: Error | null;
   isPending?: boolean;
 };
 
-const ProductsPageStates: React.FC<ProductsPageStatesProps> = ({
+const ProductsPageStates: React.FC<Props> = ({
   isLoading,
   error,
   isPending,
@@ -22,7 +22,7 @@ const ProductsPageStates: React.FC<ProductsPageStatesProps> = ({
             <View key={i} style={styles.skeletonCard}>
               <View style={styles.skeletonImage} />
               <View style={styles.skeletonLine} />
-              <View style={[styles.skeletonLine, { width: "50%" }]} />
+              <View style={[styles.skeletonLine, styles.skeletonLineNarrow]} />
             </View>
           ))}
         </View>
@@ -36,55 +36,9 @@ const ProductsPageStates: React.FC<ProductsPageStatesProps> = ({
       </View>
     );
 
-  if (isPending)
-    return <Text style={styles.pending}>Updating…</Text>;
+  if (isPending) return <Text style={styles.pending}>Updating…</Text>;
 
   return null;
 };
-
-const styles = StyleSheet.create({
-  loading: {
-    paddingVertical: spacing.gap[8],
-    paddingHorizontal: spacing.px,
-  },
-  skeletonTitle: {
-    height: 32,
-    width: 192,
-    borderRadius: 4,
-    backgroundColor: colors.stone[800],
-  },
-  skeletonGrid: {
-    marginTop: spacing.gap[2],
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.gap[2],
-  },
-  skeletonCard: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    overflow: "hidden",
-    width: "30%",
-    minWidth: 140,
-  },
-  skeletonImage: {
-    aspectRatio: 4 / 3,
-    backgroundColor: colors.stone[800],
-  },
-  skeletonLine: {
-    height: 20,
-    margin: spacing.gap[2],
-    borderRadius: 4,
-    backgroundColor: colors.stone[700],
-  },
-  errorWrap: { paddingHorizontal: spacing.px },
-  errorText: { color: colors.red[400] },
-  pending: {
-    marginTop: spacing.gap[2],
-    ...typography.sm,
-    color: "rgba(251,191,36,0.8)",
-  },
-});
 
 export default ProductsPageStates;

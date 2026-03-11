@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 const BASE =
   (typeof process !== "undefined" && process.env?.EXPO_PUBLIC_API_URL) ||
@@ -6,7 +6,7 @@ const BASE =
 
 let socket: ReturnType<typeof io> | null = null;
 
-export function getSocket(token: string | null) {
+export const getSocket = (token: string | null): Socket | null => {
   if (!token) return null;
   if (socket?.connected) return socket;
   socket = io(BASE, {
@@ -14,11 +14,11 @@ export function getSocket(token: string | null) {
     transports: ["websocket", "polling"],
   });
   return socket;
-}
+};
 
-export function disconnectSocket() {
+export const disconnectSocket = () => {
   if (socket) {
     socket.disconnect();
     socket = null;
   }
-}
+};

@@ -6,18 +6,17 @@ import {
 } from "../services/adminService.js";
 import type { Server as SocketServer } from "socket.io";
 
-function getIo(req: Request): SocketServer | undefined {
-  return (
-    req as Request & { app?: { get?: (k: string) => SocketServer } }
-  ).app?.get?.("io") as SocketServer | undefined;
-}
+const getIo = (req: Request): SocketServer | undefined =>
+  (req as Request & { app?: { get?: (k: string) => SocketServer } }).app?.get?.(
+    "io"
+  ) as SocketServer | undefined;
 
 /** POST /admin/products */
-export async function createProductHandler(
+export const createProductHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const product = await createProduct(
       req.body as Parameters<typeof createProduct>[0]
@@ -27,14 +26,14 @@ export async function createProductHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** PATCH /admin/products/:id */
-export async function updateProductHandler(
+export const updateProductHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const { id } = req.params as { id: string };
     const product = await updateProduct(
@@ -46,14 +45,14 @@ export async function updateProductHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};
 
 /** PATCH /admin/orders/:id/status — force status, emit order.status_updated */
-export async function updateOrderStatusHandler(
+export const updateOrderStatusHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void> => {
   try {
     const { id } = req.params as { id: string };
     const body = req.body as {
@@ -65,4 +64,4 @@ export async function updateOrderStatusHandler(
     if (e instanceof Error && "statusCode" in e) return next(e);
     next(e);
   }
-}
+};

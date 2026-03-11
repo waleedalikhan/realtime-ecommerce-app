@@ -34,6 +34,7 @@ export const colors = {
 export const spacing = {
   px: 24, // px-6
   py: {
+    xs: 6,
     sm: 10,
     md: 14,
     lg: 16,
@@ -44,15 +45,15 @@ export const spacing = {
     1: 4,
     2: 8,
     4: 16,
-  6: 24,
-  8: 32,
-  10: 40,
+    6: 24,
+    8: 32,
+    10: 40,
   },
 } as const;
 
 export const borderRadius = {
-  lg: 12,  // rounded-xl
-  xl: 16,  // rounded-2xl
+  lg: 12, // rounded-xl
+  xl: 16, // rounded-2xl
 } as const;
 
 export const typography = {

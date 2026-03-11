@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { Controller } from "react-hook-form";
 import AuthWall from "@/components/global/AuthWall";
 import InputField from "@/components/global/ui/Input";
 import useCheckout from "@/hooks/useCheckout";
 import Button from "@/components/global/ui/Button";
 import { IconLoader } from "@/components/icons";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import styles from "@/styles/Checkout.styles";
 
 const Checkout: React.FC = () => {
   const { token, control, handleSubmit, errors, onSubmit, loading } =
@@ -20,9 +20,7 @@ const Checkout: React.FC = () => {
     <View style={styles.wrap}>
       <View style={styles.card}>
         <Text style={styles.title}>Checkout</Text>
-        <Text style={styles.subtitle}>
-          Enter shipping and contact details.
-        </Text>
+        <Text style={styles.subtitle}>Enter shipping and contact details.</Text>
         <View style={styles.form}>
           <Controller
             control={control}
@@ -72,52 +70,13 @@ const Checkout: React.FC = () => {
           {errors.root ? (
             <Text style={styles.rootError}>{errors.root.message}</Text>
           ) : null}
-          <Pressable
-            onPress={handleSubmit(onSubmit)}
-            disabled={loading}
-            style={({ pressed }) => (pressed ? styles.pressed : undefined)}
-          >
-            <Button disabled={loading}>
-              {loading ? <IconLoader /> : "Place order"}
-            </Button>
-          </Pressable>
+          <Button disabled={loading} onPress={handleSubmit(onSubmit)}>
+            {loading ? <IconLoader /> : "Place order"}
+          </Button>
         </View>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    maxWidth: 448,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-  },
-  card: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
-    borderColor: "rgba(41,37,36,0.8)",
-    backgroundColor: "rgba(28,25,23,0.4)",
-    padding: spacing.gap[8],
-  },
-  title: {
-    ...typography["2xl"],
-    ...typography.fontBold,
-    color: colors.white,
-  },
-  subtitle: {
-    marginTop: spacing.gap[2],
-    ...typography.base,
-    color: colors.stone[400],
-  },
-  form: { marginTop: spacing.gap[2] },
-  rootError: {
-    ...typography.sm,
-    color: colors.red[400],
-    marginBottom: spacing.gap[2],
-  },
-  pressed: { opacity: 0.9 },
-});
 
 export default Checkout;

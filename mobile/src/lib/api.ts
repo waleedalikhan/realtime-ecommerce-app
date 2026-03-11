@@ -10,13 +10,12 @@ const BASE =
 
 export type ApiError = { message: string; statusCode?: number };
 
-export async function api<T>(
+export const api = async <T>(
   path: string,
   options: RequestInit & { token?: string | null; skipRefresh?: boolean } = {}
-): Promise<T> {
+): Promise<T> => {
   const { token: tokenOpt, skipRefresh, ...init } = options;
-  let token =
-    tokenOpt ?? (await getStoredToken("accessToken"));
+  let token = tokenOpt ?? (await getStoredToken("accessToken"));
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...(init.headers as Record<string, string>),
@@ -62,4 +61,4 @@ export async function api<T>(
     throw new Error((err as ApiError).message ?? "Request failed");
   }
   return res.json() as Promise<T>;
-}
+};

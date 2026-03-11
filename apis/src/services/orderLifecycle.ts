@@ -15,10 +15,13 @@ const DELAY_MS = 5000; // 5s between steps for demo
  * Simulate order lifecycle: placed -> paid -> packed -> shipped -> delivered.
  * In production this would be a job queue; here we use setTimeout for demo.
  */
-export function startOrderLifecycle(orderId: string, io: SocketServer): void {
+export const startOrderLifecycle = (
+  orderId: string,
+  io: SocketServer
+): void => {
   let stepIndex = 0;
 
-  function next() {
+  const next = () => {
     stepIndex++;
     if (stepIndex >= STATUS_FLOW.length) return;
     const nextStatus = STATUS_FLOW[stepIndex];
@@ -45,7 +48,7 @@ export function startOrderLifecycle(orderId: string, io: SocketServer): void {
         console.error("Lifecycle step failed", e);
       }
     }, DELAY_MS);
-  }
+  };
 
   next();
-}
+};

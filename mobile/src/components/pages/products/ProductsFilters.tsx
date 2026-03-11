@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, Text, StyleSheet, Pressable } from "react-native";
+import { View, TextInput, Text, Pressable } from "react-native";
 import useProducts from "@/hooks/useProducts";
 import Select from "@/components/global/ui/Select";
-import { colors, spacing, typography, borderRadius } from "@/lib/theme";
+import { colors } from "@/lib/theme";
+import { productsFiltersStyles as styles } from "@/styles/Products.styles";
 
 const ProductsFilters: React.FC = () => {
   const { updateFilters, search, category, categories, sort } = useProducts();
@@ -28,7 +29,10 @@ const ProductsFilters: React.FC = () => {
           onSubmitEditing={handleSearch}
           returnKeyType="search"
         />
-        <Pressable style={({ pressed }) => [styles.searchBtn, pressed && styles.pressed]} onPress={handleSearch}>
+        <Pressable
+          style={({ pressed }) => [styles.searchBtn, pressed && styles.pressed]}
+          onPress={handleSearch}
+        >
           <Text style={styles.searchBtnText}>Search</Text>
         </Pressable>
       </View>
@@ -61,50 +65,5 @@ const ProductsFilters: React.FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    marginTop: spacing.gap[2],
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    gap: spacing.gap[2],
-  },
-  searchRow: { flexDirection: "row", minWidth: 200, maxWidth: 400, flex: 1 },
-  searchInput: {
-    flex: 1,
-    ...typography.base,
-    color: colors.white,
-    backgroundColor: "rgba(41,37,36,0.6)",
-    borderWidth: 1,
-    borderColor: colors.stone[600],
-    borderTopLeftRadius: borderRadius.lg,
-    borderBottomLeftRadius: borderRadius.lg,
-    paddingHorizontal: spacing.gap[4],
-    paddingVertical: spacing.py.sm,
-  },
-  searchBtn: {
-    backgroundColor: colors.stone[700],
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderColor: colors.stone[600],
-    borderTopRightRadius: borderRadius.lg,
-    borderBottomRightRadius: borderRadius.lg,
-    paddingHorizontal: spacing.gap[4],
-    paddingVertical: spacing.py.sm,
-    justifyContent: "center",
-  },
-  pressed: { opacity: 0.8 },
-  searchBtnText: {
-    ...typography.sm,
-    ...typography.fontMedium,
-    color: colors.white,
-  },
-  row: { flexDirection: "row", alignItems: "center", gap: spacing.gap[2] },
-  label: {
-    ...typography.sm,
-    color: colors.stone[400],
-  },
-});
 
 export default ProductsFilters;

@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Products from "@/components/pages/products/index";
-import { colors, spacing } from "@/lib/theme";
+import { productsWithSuspenseStyles as styles } from "@/styles/Products.styles";
 
 const ProductsFallback: React.FC = () => (
   <View style={styles.fallback}>
@@ -22,37 +22,3 @@ export default function ProductsWithSuspense() {
     </Suspense>
   );
 }
-
-const styles = StyleSheet.create({
-  fallback: {
-    maxWidth: 1152,
-    alignSelf: "center",
-    width: "100%",
-    paddingHorizontal: spacing.px,
-    paddingBottom: spacing.gap[8],
-  },
-  skeletonTitle: {
-    height: 32,
-    width: 192,
-    borderRadius: 4,
-    backgroundColor: colors.stone[700],
-  },
-  skeletonSubtitle: {
-    marginTop: spacing.gap[4],
-    height: 16,
-    width: 280,
-    borderRadius: 4,
-    backgroundColor: colors.stone[800],
-  },
-  skeletonFilters: {
-    marginTop: spacing.gap[8],
-    flexDirection: "row",
-    gap: spacing.gap[4],
-  },
-  skeletonFilter: {
-    height: 40,
-    width: 96,
-    borderRadius: 4,
-    backgroundColor: colors.stone[700],
-  },
-});

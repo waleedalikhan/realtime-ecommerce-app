@@ -1,9 +1,9 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
-export async function api<T>(
+export const api = async <T>(
   path: string,
   options: RequestInit & { token?: string } = {}
-): Promise<T> {
+): Promise<T> => {
   const { token, ...init } = options;
   const headers: HeadersInit = {
     "Content-Type": "application/json",
@@ -19,4 +19,4 @@ export async function api<T>(
     throw new Error((err as { message?: string }).message ?? "Request failed");
   }
   return res.json() as Promise<T>;
-}
+};

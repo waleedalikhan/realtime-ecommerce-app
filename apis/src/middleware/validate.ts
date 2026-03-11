@@ -8,8 +8,9 @@ type Source = "body" | "query" | "params";
  * Validate req[source] with Zod schema; attach result to req[source] and next().
  * On error, next(AppError(400)) with message and optional details.
  */
-export function validate(schema: z.ZodType, source: Source = "body") {
-  return (req: Request, _res: Response, next: NextFunction): void => {
+export const validate =
+  (schema: z.ZodType, source: Source = "body") =>
+  (req: Request, _res: Response, next: NextFunction): void => {
     const result = schema.safeParse(req[source]);
     if (!result.success) {
       const message = result.error.errors.map((e) => e.message).join("; ");
@@ -19,4 +20,3 @@ export function validate(schema: z.ZodType, source: Source = "body") {
     (req as unknown as Record<string, unknown>)[source] = result.data;
     next();
   };
-}

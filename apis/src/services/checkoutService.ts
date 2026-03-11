@@ -12,11 +12,11 @@ type TransactionClient = Parameters<
  * Optimistic locking: Product.version is incremented on update; if updateMany
  * affects 0 rows (another checkout took the stock), we rollback and return 409.
  */
-export async function checkout(
+export const checkout = async (
   userId: string,
   body: CheckoutBody,
   io?: SocketServer
-) {
+) => {
   const cart = await prisma.cart.findUnique({
     where: { userId },
     include: { items: { include: { product: true } } },
@@ -67,4 +67,4 @@ export async function checkout(
     io.to(`user:${userId}`).emit("order.created", order);
   }
   return order;
-}
+};

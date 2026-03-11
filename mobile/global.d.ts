@@ -51,6 +51,13 @@ declare global {
     product: { name: string };
     priceAt: number;
   }
+
+  type Option =
+    | {
+        label: string;
+        value: string;
+      }
+    | string;
 }
 
 export {};

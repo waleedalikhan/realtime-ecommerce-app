@@ -6,7 +6,7 @@ type StyleValue =
   | null
   | undefined;
 
-export function cn(...inputs: StyleValue[]): Record<string, unknown>[] {
+export const cn = (...inputs: StyleValue[]): Record<string, unknown>[] => {
   const out: Record<string, unknown>[] = [];
   for (const x of inputs) {
     if (x == null || x === false) continue;
@@ -14,4 +14,4 @@ export function cn(...inputs: StyleValue[]): Record<string, unknown>[] {
     else if (typeof x === "object") out.push(x);
   }
   return out;
-}
+};
