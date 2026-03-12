@@ -1,21 +1,16 @@
-/**
- * Unit test: cart service — add item when product not found throws 404.
- * Covers validation and error path in addCartItem.
- */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { AppError } from "../../utils/errors.js";
 import type { AddCartItemBody } from "@repo/shared";
+import { prisma } from "../../lib/prisma.js";
+import { addCartItem } from "../cartService.js";
 
-vi.mock("../../lib/prisma.js", () => ({
+vi.mock("@/lib/prisma.js", () => ({
   prisma: {
     product: { findUnique: vi.fn() },
     cart: { findUnique: vi.fn(), create: vi.fn() },
     cartItem: { findUnique: vi.fn(), create: vi.fn(), findMany: vi.fn() },
   },
 }));
-
-import { prisma } from "../../lib/prisma.js";
-import { addCartItem } from "../cartService.js";
 
 const mockUserId = "user-1";
 const mockCartId = "cart-1";

@@ -1,3 +1,4 @@
+import React from "react";
 import useProducts from "@/hooks/useProducts";
 import ProductCard from "@/components/pages/products/ProductCard";
 
