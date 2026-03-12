@@ -1,3 +1,4 @@
+import React from "react";
 import ProductsWithSuspense from "@/components/pages/products/ProductsWithSuspense";
 import { Metadata, NextPage } from "next";
 

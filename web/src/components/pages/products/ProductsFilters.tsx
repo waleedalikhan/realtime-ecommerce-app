@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useProducts from "@/hooks/useProducts";
 import Select from "@/components/global/ui/Select";
 

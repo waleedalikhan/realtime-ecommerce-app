@@ -11,10 +11,6 @@ const STATUS_FLOW: OrderStatus[] = [
 ];
 const DELAY_MS = 5000; // 5s between steps for demo
 
-/**
- * Simulate order lifecycle: placed -> paid -> packed -> shipped -> delivered.
- * In production this would be a job queue; here we use setTimeout for demo.
- */
 export const startOrderLifecycle = (
   orderId: string,
   io: SocketServer

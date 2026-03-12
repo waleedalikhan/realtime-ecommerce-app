@@ -3,12 +3,7 @@ node_modules
 .pnpm-store
 
 # Environment
-.env
-.env.local
 .env.*.local
-.env.development
-.env.production
-.env.test
 
 # Build outputs
 dist
@@ -34,7 +29,6 @@ Thumbs.db
 
 # IDE / Editor
 .idea
-.vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
 
@@ -60,3 +54,6 @@ Thumbs.db
 # Misc
 *.local
 .cache
+config.bat
+temp_auto_push.bat
+temp_interactive_push.bat
