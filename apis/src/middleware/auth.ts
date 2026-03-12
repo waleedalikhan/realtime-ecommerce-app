@@ -3,8 +3,11 @@ import { verifyToken, type TokenPayload } from "../utils/jwt.js";
 import { AppError } from "../utils/errors.js";
 import { logger } from "../utils/logger.js";
 
-const ACCESS_SECRET: string = process.env.JWT_ACCESS_SECRET ?? "";
-if (!ACCESS_SECRET) throw new Error("JWT_ACCESS_SECRET is required");
+const getAccessSecret = (): string => {
+  const secret = process.env.JWT_ACCESS_SECRET ?? "";
+  if (!secret) throw new Error("JWT_ACCESS_SECRET is required");
+  return secret;
+};
 
 /** Attach req.user from Bearer token. Use on all protected routes. */
 export const authMiddleware = (
@@ -19,7 +22,7 @@ export const authMiddleware = (
   }
   const token = authHeader.slice(7);
   try {
-    const payload = verifyToken<TokenPayload>(token, ACCESS_SECRET);
+    const payload = verifyToken<TokenPayload>(token, getAccessSecret());
     (req as Request & { user: TokenPayload }).user = payload;
     next();
   } catch (e) {

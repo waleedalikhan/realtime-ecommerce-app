@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import useProducts from "@/hooks/useProducts";
 import ProductsPageStates from "@/components/pages/products/ProductsPageStates";
 import ProductsFilters from "@/components/pages/products/ProductsFilters";

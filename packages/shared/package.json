@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "node api.js && tsc",
     "clean": "rm -rf dist"
   },
   "dependencies": {

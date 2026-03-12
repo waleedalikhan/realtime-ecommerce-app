@@ -1,3 +1,4 @@
+import React from "react";
 import { Metadata, NextPage } from "next";
 import Checkout from "@/components/pages/checkout";
 

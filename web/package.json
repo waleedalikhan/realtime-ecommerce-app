@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node api.js && next dev",
+    "build": "node api.js && next build",
+    "start": "node api.js && next start",
     "lint": "next lint",
-    "test": "pnpm exec vitest run"
+    "test": "vitest run"
   },
   "dependencies": {
     "@repo/shared": "workspace:*",
