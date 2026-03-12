@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "pnpm exec vitest run"
+    "test": "vitest run"
   },
   "dependencies": {
     "@repo/shared": "workspace:*",

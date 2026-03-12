@@ -1,6 +1,7 @@
 /**
  * Checkout form: shows validation errors for invalid input (Zod schema from shared).
  */
+import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "./test-utils";

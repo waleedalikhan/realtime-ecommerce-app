@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import AuthWall from "@/components/global/AuthWall";
 import InputField from "@/components/global/ui/Input";
 import useCheckout from "@/hooks/useCheckout";
